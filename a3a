@@ -1,0 +1,49 @@
+#Problem A, task 3a
+
+import numpy as np
+import gym
+env = gym.make('CartPole-v0')
+
+
+#constants
+DISCOUNT = 0.99
+NUM_EPS = 100
+
+def modify_outputs(obs, rew, ter, inf): # modifies the output (usually reward) as per directions
+	if ter == True:
+		rew = -1
+	else:
+		rew = 0	
+	return obs, rew, ter, inf
+
+
+# collect 2000 episodes under a uniform random policy
+print("\ncollecting 2000 episodes under a uniform random policy...")
+time_per_episode = np.zeros(NUM_EPS)
+reward_per_episode = np.zeros(NUM_EPS)
+for episode in range(NUM_EPS):
+	observation = env.reset()
+	episode_reward = 0.0
+	cumulative_discount = DISCOUNT
+	done = False
+	while !done:
+		action = env.action_space.sample()
+		observation, reward, done, info = env.step(action)
+		observation, reward, done, info = modify_outputs(observation, reward, done, info)
+		episode_reward += cumulative_discount*reward #modifies reward to 0 on non-terminating steps and -1 on termination
+		cumulative_discount = cumulative_discount * DISCOUNT
+		if done:
+			print("Episode finished after {} timesteps".format(t+1),"\tReward from initial state is {}".format(episode_reward))
+			time_per_episode[episode] = t+1
+			reward_per_episode[episode] = episode_reward
+			break
+
+print("Mean and std. of episode times:", np.mean(time_per_episode), np.std(time_per_episode))
+print("Mean and std. of episode rewards:", np.mean(reward_per_episode), np.std(reward_per_episode))
+
+
+
+
+
+
+
