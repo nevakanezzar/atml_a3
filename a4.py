@@ -11,12 +11,12 @@ EPSILON = 0.05
 DISCOUNT = 0.99
 NUM_EPISODES = 2000
 MAX_EPISODE_LEN = 300
-NUM_EPISODES_EVAL = 20
-NUM_TRIALS = 100
+NUM_EPISODES_EVAL = 10
+NUM_TRIALS = 1
 
 #filenames
 SAVE_FOLDER = './save/'
-MODEL_FOLDER = '.'
+MODEL_FOLDER = './model/'
 TENSORBOARD_FOLDER = '.'
 
 
@@ -53,11 +53,11 @@ SCALAR_DIM = 1
 
 
 #hyperparameters
-LEARNING_RATE = 0.00001
+LEARNING_RATE = 0.01
 LAMBDA = 0.0
 HIDDEN_DIM = 100
-STD = 0.01
-
+STD = 0.001
+MODEL_FILENAME = MODEL_FOLDER+"a4_"+str(LEARNING_RATE)+".model"
 
 #create q learning graph
 
@@ -68,7 +68,8 @@ def q_hat(state):
 	b1 = tf.get_variable("bias1", shape=[HIDDEN_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
 	w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
 	b2 = tf.get_variable("bias2", shape=[ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-	q = tf.matmul(tf.nn.relu(tf.matmul(state,w1) + b1), w2) + b2
+	# q = tf.matmul(tf.nn.relu(tf.matmul(state,w1) + b1), w2) + b2
+	q = tf.matmul(tf.nn.relu(tf.matmul(state,w1)), w2)
 	return q
 
 
@@ -102,7 +103,7 @@ thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
 loss = tf.reduce_mean(0.5*tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
-train_op = tf.train.RMSPropOptimizer(LEARNING_RATE).minimize(loss)
+train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
@@ -113,6 +114,7 @@ def run():
 
 	for trial in range(NUM_TRIALS):
 		init_op = tf.global_variables_initializer()
+		saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)
 		with tf.Session() as sess:
 			sess.run(init_op)	# init vars
 			for episode in range(NUM_EPISODES):
@@ -182,7 +184,8 @@ def run():
 				bellman_losses[trial,episode] = bellman_l1
 				disc_rewards[trial,episode] = rew
 				aver_moves[trial,episode] = ave
-	
+			saver.save(sess,MODEL_FILENAME)
+			print("Saved model at",MODEL_FILENAME)	
 
 	# print("losses",losses)
 	# print("bellman", bellman_losses)
