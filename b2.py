@@ -92,95 +92,95 @@ tf.reset_default_graph()
 
 #tf functions
 
+with tf.device('/gpu:0'):
+	#prediction inputs
+	s_in = tf.placeholder(tf.float32, [None,FRAMES, STATE_X, STATE_Y])
+	a_in = tf.placeholder(tf.int32, [None])
+	r_in = tf.placeholder(tf.float32, [None])
+	s1_in = tf.placeholder(tf.float32, [None,FRAMES, STATE_X, STATE_Y])
+	discount_in = tf.placeholder(tf.float32)
+	row_indices_in = tf.placeholder(tf.int32, [None])
+	not_done_in = tf.placeholder(tf.float32, [None])
 
-#prediction inputs
-s_in = tf.placeholder(tf.float32, [None,FRAMES, STATE_X, STATE_Y])
-a_in = tf.placeholder(tf.int32, [None])
-r_in = tf.placeholder(tf.float32, [None])
-s1_in = tf.placeholder(tf.float32, [None,FRAMES, STATE_X, STATE_Y])
-discount_in = tf.placeholder(tf.float32)
-row_indices_in = tf.placeholder(tf.int32, [None])
-not_done_in = tf.placeholder(tf.float32, [None])
+	#table of action indices
+	actions_indices = tf.stack([row_indices_in, a_in],axis=1)
 
-#table of action indices
-actions_indices = tf.stack([row_indices_in, a_in],axis=1)
+	#constants (inferred or otherwise)
+	batch_size = tf.shape(s_in)[0]
 
-#constants (inferred or otherwise)
-batch_size = tf.shape(s_in)[0]
+	#reshapes for conv net
+	s_in1 = tf.transpose(s_in, [0,2,3,1])
+	s1_in1 = tf.transpose(s1_in, [0,2,3,1])
 
-#reshapes for conv net
-s_in1 = tf.transpose(s_in, [0,2,3,1])
-s1_in1 = tf.transpose(s1_in, [0,2,3,1])
+	c1_height = 6
+	c1_width = 6
+	c1_in_channels = FRAMES
+	c1_out_channels =16
+	c1_shape = [c1_height, c1_width, c1_in_channels, c1_out_channels]
 
-c1_height = 6
-c1_width = 6
-c1_in_channels = FRAMES
-c1_out_channels =16
-c1_shape = [c1_height, c1_width, c1_in_channels, c1_out_channels]
+	c2_height = 4
+	c2_width = 4
+	c2_in_channels = 16
+	c2_out_channels = 32
+	c2_shape = [c2_height, c2_width, c2_in_channels, c2_out_channels]
 
-c2_height = 4
-c2_width = 4
-c2_in_channels = 16
-c2_out_channels = 32
-c2_shape = [c2_height, c2_width, c2_in_channels, c2_out_channels]
+	FC_IN_DIM = STATE_X * STATE_Y * c2_out_channels / 16
+	FC_OUT_DIM = 256
 
-FC_IN_DIM = STATE_X * STATE_Y * c2_out_channels / 16
-FC_OUT_DIM = 256
+	#q_sa network variables
+	W1 = tf.get_variable("weight1", shape=c1_shape, initializer=tf.random_normal_initializer(0.0,STD))
+	W2 = tf.get_variable("weight2", shape=c2_shape, initializer=tf.random_normal_initializer(0.0,STD))
+	W3 = tf.get_variable("weight3", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	W4 = tf.get_variable("weight4", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	B1 = tf.get_variable("bias1", shape=[c1_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
+	B2 = tf.get_variable("bias2", shape=[c2_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
+	B3 = tf.get_variable("bias3", shape=[FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	B4 = tf.get_variable("bias4", shape=[ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
 
-#q_sa network variables
-W1 = tf.get_variable("weight1", shape=c1_shape, initializer=tf.random_normal_initializer(0.0,STD))
-W2 = tf.get_variable("weight2", shape=c2_shape, initializer=tf.random_normal_initializer(0.0,STD))
-W3 = tf.get_variable("weight3", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-W4 = tf.get_variable("weight4", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-B1 = tf.get_variable("bias1", shape=[c1_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-B2 = tf.get_variable("bias2", shape=[c2_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-B3 = tf.get_variable("bias3", shape=[FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-B4 = tf.get_variable("bias4", shape=[ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	#q_s1a1 network variables
+	W5 = tf.get_variable("weight5", shape=c1_shape, initializer=tf.random_normal_initializer(0.0,STD))
+	W6 = tf.get_variable("weight6", shape=c2_shape, initializer=tf.random_normal_initializer(0.0,STD))
+	W7 = tf.get_variable("weight7", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	W8 = tf.get_variable("weight8", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	B5 = tf.get_variable("bias5", shape=[c1_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
+	B6 = tf.get_variable("bias6", shape=[c2_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
+	B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
 
-#q_s1a1 network variables
-W5 = tf.get_variable("weight5", shape=c1_shape, initializer=tf.random_normal_initializer(0.0,STD))
-W6 = tf.get_variable("weight6", shape=c2_shape, initializer=tf.random_normal_initializer(0.0,STD))
-W7 = tf.get_variable("weight7", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-W8 = tf.get_variable("weight8", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-B5 = tf.get_variable("bias5", shape=[c1_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-B6 = tf.get_variable("bias6", shape=[c2_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	#copy the network over, if it's time
 
-#copy the network over, if it's time
-
-a1 = W5.assign(W1)
-a2 = W6.assign(W2)
-a3 = W7.assign(W3)
-a4 = W8.assign(W4)
-a5 = B5.assign(B1)
-a6 = B6.assign(B2)
-a7 = B7.assign(B3)
-a8 = B8.assign(B4)
-
-
-#q_sa network 
-conv1 = tf.nn.relu(tf.nn.conv2d(s_in1, W1, strides=[1,2,2,1], padding="SAME") + B1)
-conv1 = tf.nn.relu(tf.nn.conv2d(conv1, W2, strides=[1,2,2,1], padding="SAME") + B2)
-conv1 = tf.nn.relu(tf.matmul(tf.reshape(conv1, [batch_size,-1]), W3) + B3)
-q_out = tf.matmul(conv1,W4) + B4
-
-#q_s1a1 network 
-conv2 = tf.nn.relu(tf.nn.conv2d(s1_in1, W5, strides=[1,2,2,1], padding="SAME") + B5)
-conv2 = tf.nn.relu(tf.nn.conv2d(conv2,  W6, strides=[1,2,2,1], padding="SAME") + B6)
-conv2 = tf.nn.relu(tf.matmul(tf.reshape(conv1, [batch_size,-1]), W7) + B7)
-q1_out = tf.matmul(conv1,W8) + B8
+	a1 = W5.assign(W1)
+	a2 = W6.assign(W2)
+	a3 = W7.assign(W3)
+	a4 = W8.assign(W4)
+	a5 = B5.assign(B1)
+	a6 = B6.assign(B2)
+	a7 = B7.assign(B3)
+	a8 = B8.assign(B4)
 
 
-target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1))
+	#q_sa network 
+	conv1 = tf.nn.relu(tf.nn.conv2d(s_in1, W1, strides=[1,2,2,1], padding="SAME") + B1)
+	conv1 = tf.nn.relu(tf.nn.conv2d(conv1, W2, strides=[1,2,2,1], padding="SAME") + B2)
+	conv1 = tf.nn.relu(tf.matmul(tf.reshape(conv1, [batch_size,-1]), W3) + B3)
+	q_out = tf.matmul(conv1,W4) + B4
 
-bellman_residual = target - tf.gather_nd(q_out,actions_indices)
+	#q_s1a1 network 
+	conv2 = tf.nn.relu(tf.nn.conv2d(s1_in1, W5, strides=[1,2,2,1], padding="SAME") + B5)
+	conv2 = tf.nn.relu(tf.nn.conv2d(conv2,  W6, strides=[1,2,2,1], padding="SAME") + B6)
+	conv2 = tf.nn.relu(tf.matmul(tf.reshape(conv1, [batch_size,-1]), W7) + B7)
+	q1_out = tf.matmul(conv1,W8) + B8
 
-thetas = [item for item in tf.trainable_variables()]
-reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
-train_op = tf.train.RMSPropOptimizer(LEARNING_RATE).minimize(loss)
+	target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1))
+
+	bellman_residual = target - tf.gather_nd(q_out,actions_indices)
+
+	thetas = [item for item in tf.trainable_variables()]
+	reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
+
+	loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
+	train_op = tf.train.RMSPropOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
@@ -200,7 +200,7 @@ def run():
 
 	init_op = tf.global_variables_initializer()
 	saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)
-	with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
+	with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=True)) as sess:
 
 		sess.run(init_op)
 
