@@ -195,12 +195,12 @@ def run():
 	test_steps = np.zeros([NUM_STEPS//EVAL_EVERY+1,NUM_EPISODES_EVAL])
 	test_disc_rew = np.zeros([NUM_STEPS//EVAL_EVERY+1,NUM_EPISODES_EVAL])
 	
-	last_eval = 0
+	next_eval = EVAL_EVERY
 	eS = np.zeros([4, STATE_X, STATE_Y],dtype=np.uint8)
 
 	init_op = tf.global_variables_initializer()
 	saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)
-	with tf.Session() as sess:
+	with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
 
 		sess.run(init_op)
 
@@ -261,8 +261,8 @@ def run():
 				train_bellman.append(bellman_l1/ep_steps)
 				print("Steps:",steps,"\tEpisode steps:",ep_steps,"\tTot rew:",tot_rew,"\tDisc rew:",disc_rew,"\tLoss:",l1/ep_steps,"\tBellman:",bellman_l1/ep_steps)
 				
-				if (steps - last_eval) > EVAL_EVERY:  #if more than 50K steps have passed, eval
-					last_eval = steps
+				if steps > next_eval:  #if more than evaluation checkpoint, eval
+					next_eval += EVAL_EVERY
 					i = steps//EVAL_EVERY
 					e_tot_rew = 0
 					for j in range(NUM_EPISODES_EVAL):
