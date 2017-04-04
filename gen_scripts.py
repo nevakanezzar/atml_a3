@@ -14,7 +14,7 @@ for g in games:
 					"#$ -l h_rt=12:00:00\n",
 					"#$ -S /bin/bash\n",
 					"#$ -j y\n",
-					"#$ -wd $HOME/git/atml_a3\n"
+					"#$ -wd $HOME/git/atml_a3/\n"
 					"hostname\n",
 					"date\n",
 					"python3 ~/git/atml_a3/b2.py "+g+" "+l+" "+d+"\n"]
