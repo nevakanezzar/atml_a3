@@ -101,7 +101,7 @@ tf.reset_default_graph()
 
 #tf functions
 
-with tf.device('/gpu:0'):
+with tf.device('/cpu:0'):
 	#prediction inputs
 	s_in = tf.placeholder(tf.float32, [None,FRAMES, STATE_X, STATE_Y])
 	a_in = tf.placeholder(tf.int32, [None])
