@@ -6,14 +6,24 @@ import tensorflow as tf
 import random
 import time
 from PIL import Image
+import select
+
+
+try:
+	GAME_INDEX = int(sys.argv[1])
+	LEARNING_RATE = float(sys.argv[2])
+	DISCOUNT_STARTING_FACTOR = int(sys.argv[3])
+except:
+	print("Something went wrong. Signature is game_index learning_rate discount_starting_factor")
+
 
 #arguments
-GAME_INDEX = 1
+# GAME_INDEX = 2
 
 #constants
 GAMES = ['Pong-v3','MsPacman-v3','Boxing-v3']
 DISCOUNT = 0.99
-EPSILON = 0.1
+EPSILON = 1
 FRAMES = 4
 MODULO = 5000  # TO DO 5000
 NUM_STEPS = 1000000  # TO DO 1000000
@@ -72,16 +82,15 @@ def preprocess_state(input_img):
 
 
 #hyperparameters
-LEARNING_RATE = 0.0001
+# LEARNING_RATE = 0.01
 BUFFER_SIZE = 200000  #TO DO 100000
 MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
-STD = 0.00001
 
 
 #file names
 year, month, day, hour, minute = time.strftime("%Y,%m,%d,%H,%M").split(',')
-MODEL = "b34_"+str(GAME_INDEX)+"_"+hour+'_'+minute
+MODEL = "b34_"+sys.argv[1]+"_"+sys.argv[2]+"_"+sys.argv[3]+"_"+hour+'_'+minute
 MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
 TRAIN_SAVE_FILENAME = SAVE_FOLDER+MODEL+"train.csv"
 TEST_SAVE_FILENAME = SAVE_FOLDER+MODEL+"test.csv"
@@ -115,7 +124,7 @@ with tf.device('/gpu:0'):
 	c1_height = 6
 	c1_width = 6
 	c1_in_channels = FRAMES
-	c1_out_channels =16
+	c1_out_channels = 16
 	c1_shape = [c1_height, c1_width, c1_in_channels, c1_out_channels]
 
 	c2_height = 4
@@ -128,24 +137,24 @@ with tf.device('/gpu:0'):
 	FC_OUT_DIM = 256
 
 	#q_sa network variables
-	W1 = tf.get_variable("weight1", shape=c1_shape, initializer=tf.random_normal_initializer(0.0,STD))
-	W2 = tf.get_variable("weight2", shape=c2_shape, initializer=tf.random_normal_initializer(0.0,STD))
-	W3 = tf.get_variable("weight3", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-	W4 = tf.get_variable("weight4", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-	B1 = tf.get_variable("bias1", shape=[c1_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-	B2 = tf.get_variable("bias2", shape=[c2_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-	B3 = tf.get_variable("bias3", shape=[FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-	B4 = tf.get_variable("bias4", shape=[ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	W1 = tf.get_variable("weight1", shape=c1_shape, initializer=tf.contrib.layers.xavier_initializer())
+	W2 = tf.get_variable("weight2", shape=c2_shape, initializer=tf.contrib.layers.xavier_initializer())
+	W3 = tf.get_variable("weight3", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	W4 = tf.get_variable("weight4", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	B1 = tf.get_variable("bias1", shape=[c1_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
+	B2 = tf.get_variable("bias2", shape=[c2_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
+	B3 = tf.get_variable("bias3", shape=[FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	B4 = tf.get_variable("bias4", shape=[ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
 
 	#q_s1a1 network variables
-	W5 = tf.get_variable("weight5", shape=c1_shape, initializer=tf.random_normal_initializer(0.0,STD))
-	W6 = tf.get_variable("weight6", shape=c2_shape, initializer=tf.random_normal_initializer(0.0,STD))
-	W7 = tf.get_variable("weight7", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-	W8 = tf.get_variable("weight8", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-	B5 = tf.get_variable("bias5", shape=[c1_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-	B6 = tf.get_variable("bias6", shape=[c2_shape[-1]], initializer=tf.random_normal_initializer(0.0,STD))
-	B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.random_normal_initializer(0.0,STD))
-	B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.random_normal_initializer(0.0,STD))
+	W5 = tf.get_variable("weight5", shape=c1_shape, initializer=tf.contrib.layers.xavier_initializer())
+	W6 = tf.get_variable("weight6", shape=c2_shape, initializer=tf.contrib.layers.xavier_initializer())
+	W7 = tf.get_variable("weight7", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	W8 = tf.get_variable("weight8", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	B5 = tf.get_variable("bias5", shape=[c1_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
+	B6 = tf.get_variable("bias6", shape=[c2_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
+	B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
 
 	#copy the network over, if it's time
 
@@ -192,8 +201,8 @@ def run():
 	
 	train_losses = []
 	train_bellman = []
-	test_steps = np.zeros([NUM_STEPS//EVAL_EVERY+1,NUM_EPISODES_EVAL])
-	test_disc_rew = np.zeros([NUM_STEPS//EVAL_EVERY+1,NUM_EPISODES_EVAL])
+	test_steps = np.zeros([NUM_STEPS//EVAL_EVERY+2,NUM_EPISODES_EVAL])
+	test_disc_rew = np.zeros([NUM_STEPS//EVAL_EVERY+2,NUM_EPISODES_EVAL])
 	
 	next_eval = EVAL_EVERY
 	eS = np.zeros([4, STATE_X, STATE_Y],dtype=np.uint8)
@@ -204,6 +213,7 @@ def run():
 
 		sess.run(init_op)
 
+		input = ""
 		ep_steps = 0
 		l1 = 0.0
 		bellman_l1 = 0.0
@@ -212,6 +222,14 @@ def run():
 		S[0] = S[1] = S[2] = S[3] = preprocess_state(s_t)
 
 		for steps in range(FRAMES-1,NUM_STEPS+FRAMES-1):
+			
+			i,_,_ = select.select([sys.stdin],[],[],0)
+			for s in i:
+				if s == sys.stdin:
+					input = sys.stdin.readline()
+					input = input[:-1].lower()
+			
+			EPSILON = (0.9 * 0.99999**(DISCOUNT_STARTING_FACTOR+steps)) + 0.1
 			if np.random.random()>EPSILON:
 				S_in = np.take(S,[range((steps%BUFFER_SIZE)-FRAMES+1,(steps%BUFFER_SIZE)+1)], axis=0)
 				qs = sess.run(q_out,feed_dict={s_in:S_in})
@@ -220,6 +238,7 @@ def run():
 				a_t = np.random.choice(ACTION_DIM)
 			s1_t, r_t, done, info = env.step(a_t)
 			s1_t, r_t, not_done, info = modify_outputs(s1_t, r_t, done, info)
+			if input=='r': env.render()
 			tot_rew += r_t
 			disc_rew += r_t * DISCOUNT**ep_steps
 
@@ -271,10 +290,16 @@ def run():
 						e_s_t = env.reset()	
 						eS[0] = eS[1] = eS[2] = eS[3] = preprocess_state(e_s_t)
 						while 1:
+							i,_,_ = select.select([sys.stdin],[],[],0)
+							for s in i:
+								if s == sys.stdin:
+									input = sys.stdin.readline()
+									input = input[:-1].lower()
 							qs = sess.run(q_out,feed_dict={s_in:[eS]})
 							e_a_t = np.argmax(qs)				
 							e_s1_t, e_r_t, e_done, e_info = env.step(e_a_t)
 							e_s1_t, e_r_t, e_not_done, e_info = modify_outputs(e_s1_t, e_r_t, e_done, e_info)
+							if input=='r': env.render()
 							e_tot_rew += e_r_t
 							e_ep_disc_rew += e_r_t * DISCOUNT**e_ep_steps
 							e_ep_steps += 1
@@ -311,10 +336,16 @@ def run():
 			e_s_t = env.reset()	
 			eS[0] = eS[1] = eS[2] = eS[3] = preprocess_state(e_s_t)
 			while 1:
+				i,_,_ = select.select([sys.stdin],[],[],0)
+				for s in i:
+					if s == sys.stdin:
+						input = sys.stdin.readline()
+						input = input[:-1].lower()
 				qs = sess.run(q_out,feed_dict={s_in:[eS]})
 				e_a_t = np.argmax(qs)				
 				e_s1_t, e_r_t, e_done, e_info = env.step(e_a_t)
 				e_s1_t, e_r_t, e_not_done, e_info = modify_outputs(e_s1_t, e_r_t, e_done, e_info)
+				if input=='r': env.render()
 				e_tot_rew += e_r_t
 				e_ep_disc_rew += e_r_t * DISCOUNT**e_ep_steps
 				e_ep_steps += 1
