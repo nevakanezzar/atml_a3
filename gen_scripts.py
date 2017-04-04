@@ -9,12 +9,13 @@ for g in games:
 	for l in learning_rates:
 		for d in discount_factor:
 			filename = "b"+g+l+d+".sh"
-			text = ["#$ -l tmem=2G\n",
-					"#$ -l h_vmem=2G\n",
+			text = ["#$ -l tmem=4G\n",
+					"#$ -l h_vmem=1G\n",
 					"#$ -l h_rt=12:00:00\n",
 					"#$ -S /bin/bash\n",
 					# "#$ -j y\n",
-					"#$ -wd /home/skasewa/git/atml_a3/\n"
+					"#$ -wd /home/skasewa/git/atml_a3/\n",
+					"#$ -pe smp 4"
 					"hostname\n",
 					"date\n",
 					"python3 ~/git/atml_a3/b2.py "+g+" "+l+" "+d+"\n"]

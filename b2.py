@@ -223,8 +223,8 @@ def run():
 
 		for steps in range(FRAMES-1,NUM_STEPS+FRAMES-1):
 			
-			i,_,_ = select.select([sys.stdin],[],[],0)
-			for s in i:
+			inp,_,_ = select.select([sys.stdin],[],[],0)
+			for s in inp:
 				if s == sys.stdin:
 					input = sys.stdin.readline()
 					input = input[:-1].lower()
@@ -259,7 +259,7 @@ def run():
 			ND_in = np.take(ND,ind_ends)
 
 			if steps%MODULO==0:
-				print("Updating target network...")
+				# print("Updating target network...")
 				for op in assignOps:
 					_ = sess.run(op)
 
@@ -290,8 +290,8 @@ def run():
 						e_s_t = env.reset()	
 						eS[0] = eS[1] = eS[2] = eS[3] = preprocess_state(e_s_t)
 						while 1:
-							i,_,_ = select.select([sys.stdin],[],[],0)
-							for s in i:
+							inp,_,_ = select.select([sys.stdin],[],[],0)
+							for s in inp:
 								if s == sys.stdin:
 									input = sys.stdin.readline()
 									input = input[:-1].lower()
