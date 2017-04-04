@@ -15,7 +15,7 @@ for g in games:
 					"#$ -S /bin/bash\n",
 					# "#$ -j y\n",
 					"#$ -wd /home/skasewa/git/atml_a3/\n",
-					"#$ -pe smp 4"
+					"#$ -pe smp 4\n"
 					"hostname\n",
 					"date\n",
 					"python3 ~/git/atml_a3/b2.py "+g+" "+l+" "+d+"\n"]
