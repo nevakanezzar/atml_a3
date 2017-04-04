@@ -83,7 +83,7 @@ def preprocess_state(input_img):
 
 #hyperparameters
 # LEARNING_RATE = 0.01
-BUFFER_SIZE = 200000  #TO DO 100000
+BUFFER_SIZE = 100000  #TO DO 100000
 MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
 
