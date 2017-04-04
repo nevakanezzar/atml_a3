@@ -2,7 +2,6 @@
 #$ -l h_vmem=1G
 #$ -l h_rt=12:00:00
 #$ -S /bin/bash
-#$ -j y
 #$ -wd /home/skasewa/git/atml_a3/
 hostname
 date

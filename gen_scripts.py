@@ -13,7 +13,7 @@ for g in games:
 					"#$ -l h_vmem=1G\n",
 					"#$ -l h_rt=12:00:00\n",
 					"#$ -S /bin/bash\n",
-					"#$ -j y\n",
+					# "#$ -j y\n",
 					"#$ -wd /home/skasewa/git/atml_a3/\n"
 					"hostname\n",
 					"date\n",
