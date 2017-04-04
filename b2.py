@@ -193,6 +193,8 @@ with tf.device('/cpu:0'):
 
 
 def run():
+	e_avg_disc_rew_BEST = -99999999999999.9999999999
+
 	assignOps = [a1,a2,a3,a4,a5,a6,a7,a8]
 	S = np.zeros([BUFFER_SIZE+2*FRAMES, STATE_X, STATE_Y],dtype=np.uint8)
 	A = np.zeros([BUFFER_SIZE+2*FRAMES, SCALAR_DIM],dtype=np.uint8)
@@ -316,6 +318,11 @@ def run():
 					e_avg_disc_rew = np.mean(test_disc_rew[i,:])
 					e_avg_tot_rew = float(e_tot_rew)/NUM_EPISODES_EVAL
 					print("Evaluation over",NUM_EPISODES_EVAL,"episodes at",steps,"steps | Avg steps:",e_avg_steps,"Avg tot rew:",e_avg_tot_rew,"Avg disc rew:",e_avg_disc_rew)
+					if e_avg_disc_rew > e_avg_disc_rew_BEST:
+						e_avg_disc_rew_BEST = e_avg_disc_rew 
+						saver.save(sess,MODEL_FILENAME)
+						print("Saved model at",MODEL_FILENAME)
+
 
 				ep_steps = 0
 				l1 = 0.0
@@ -362,9 +369,13 @@ def run():
 		e_avg_disc_rew = np.mean(test_disc_rew[i,:])
 		e_avg_tot_rew = float(e_tot_rew)/NUM_EPISODES_EVAL
 		print("Evaluation over",NUM_EPISODES_EVAL,"episodes at",steps,"steps | Avg steps:",e_avg_steps,"Avg tot rew:",e_avg_tot_rew,"Avg disc rew:",e_avg_disc_rew)
+		if e_avg_disc_rew > e_avg_disc_rew_BEST:
+			e_avg_disc_rew_BEST = e_avg_disc_rew 
+			saver.save(sess,MODEL_FILENAME)
+			print("Saved model at",MODEL_FILENAME)
 
-		saver.save(sess,MODEL_FILENAME)
-		print("Saved model at",MODEL_FILENAME)
+		# saver.save(sess,MODEL_FILENAME)
+		# print("Saved model at",MODEL_FILENAME)
 
 	concat = np.concatenate([train_losses,train_bellman])
 	with open(TRAIN_SAVE_FILENAME,'wb') as f:
