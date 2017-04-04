@@ -9,8 +9,8 @@ for g in games:
 	for l in learning_rates:
 		for d in discount_factor:
 			filename = "b"+g+l+d+".sh"
-			text = ["#$ -l tmem=1G\n",
-					"#$ -l h_vmem=1G\n",
+			text = ["#$ -l tmem=2G\n",
+					"#$ -l h_vmem=2G\n",
 					"#$ -l h_rt=12:00:00\n",
 					"#$ -S /bin/bash\n",
 					# "#$ -j y\n",
