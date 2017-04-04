@@ -3,6 +3,7 @@
 #$ -l h_rt=12:00:00
 #$ -S /bin/bash
 #$ -wd /home/skasewa/git/atml_a3/
-#$ -pe smp 4hostname
+#$ -pe smp 4
+hostname
 date
 python3 ~/git/atml_a3/b2.py 0 0.1 500000
