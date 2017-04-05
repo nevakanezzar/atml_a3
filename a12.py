@@ -5,19 +5,20 @@ import gym
 import random
 random.seed(42) #for repeatability, but doesn't work
 
-gym.envs.register(
-    id = 'CartPoleModified',
-    entry_point = 'gym.envs.classic_control:CartPoleEnv',
-    max_episode_steps = max_episode_steps,
-    reward_threshold = 400,
-)
-env = gym.make('CartPoleModified')
-
 
 #constants
 DISCOUNT = 0.99
 NUM_EPS = 100
 MAX_EP_LEN = 300
+
+gym.envs.register(
+    id = 'CartPoleModified-v0',
+    entry_point = 'gym.envs.classic_control:CartPoleEnv',
+    max_episode_steps = MAX_EP_LEN
+)
+env = gym.make('CartPoleModified-v0')
+
+
 
 # task 1: generate 3 trajectories under a uniform random policy. report episode lengths and return
 print("\n\n\nProblem A: 1")

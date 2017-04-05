@@ -53,22 +53,25 @@ SCALAR_DIM = 1
 
 
 #hyperparameters
-LEARNING_RATE = 0.01
+LEARNING_RATE = float(sys.argv[1])
 LAMBDA = 0.0
 HIDDEN_DIM = 30
-STD = 0.001
-MODEL_FILENAME = MODEL_FOLDER+"a5_30_"+str(LEARNING_RATE)+".model"
+
+
+#file names
+year, month, day, hour, minute = time.strftime("%Y,%m,%d,%H,%M").split(',')
+MODEL = "a5_30_"+sys.argv[1]+"_"+hour+'_'+minute
+MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
+SAVE_FILENAME = SAVE_FOLDER+MODEL+".csv"
+
 
 #create q learning graph
 
 #tf functions
 #model 2: neural net with HIDDEN_DIM-unit hidden layer
 def q_hat(state):
-	w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-	b1 = tf.get_variable("bias1", shape=[HIDDEN_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-	w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-	b2 = tf.get_variable("bias2", shape=[ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-	# q = tf.matmul(tf.nn.relu(tf.matmul(state,w1) + b1), w2) + b2
+	w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
 	q = tf.matmul(tf.nn.relu(tf.matmul(state,w1)), w2)
 	return q
 
@@ -93,20 +96,20 @@ with tf.variable_scope("QFA") as scope:
 	scope.reuse_variables()
 	q1_out = q_hat(s1_in)
 
-# target = tf.cond(tf.equal(tf.reduce_mean(r_in), tf.constant(-1.0)),lambda:r_in, lambda: discount_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1)))
-
 target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1))
 
-bellman_residual = target - tf.gather_nd(q_out,actions_indices) #q_out[0][a_in[0]] #
+bellman_residual = target - tf.gather_nd(q_out,actions_indices) 
 
 thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-loss = tf.reduce_mean(0.5*tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
+loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
 train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
+	rew_BEST = -9999999999.999999999999
+
 	losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
 	bellman_losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
 	disc_rewards = np.zeros([NUM_TRIALS,NUM_EPISODES])
@@ -184,8 +187,11 @@ def run():
 				bellman_losses[trial,episode] = bellman_l1
 				disc_rewards[trial,episode] = rew
 				aver_moves[trial,episode] = ave
-			saver.save(sess,MODEL_FILENAME)
-			print("Saved model at",MODEL_FILENAME)	
+				if rew > rew_BEST:
+					saver.save(sess,MODEL_FILENAME)
+					print("Saved model at",MODEL_FILENAME, "at average evaluation reward of",rew,", average moves:",ave)
+					rew_BEST = rew
+
 
 	# print("losses",losses)
 	# print("bellman", bellman_losses)
@@ -195,14 +201,15 @@ def run():
 	concat = np.concatenate([losses,bellman_losses,disc_rewards,aver_moves])
 	# print(concat)
 
-	year, month, day, hour, minute = time.strftime("%Y,%m,%d,%H,%M").split(',')
-	save_filename = SAVE_FOLDER+'a5_30_plots_'+hour+'_'+minute+'.csv'
-	print(save_filename)
-	with open(save_filename,'wb') as f:
-		np.savetxt(save_filename, concat, fmt='%.5f',delimiter=",")
+	print(SAVE_FILENAME)
+	with open(SAVE_FILENAME,'wb') as f:
+		np.savetxt(SAVE_FILENAME, concat,delimiter=",")
 
 if __name__ == '__main__':
 	run()
+
+
+
 
 
 

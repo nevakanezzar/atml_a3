@@ -29,13 +29,15 @@ gym.envs.register(
 env = gym.make('CartPoleModified-v0')
 
 
+tf.reset_default_graph()
+
 #reproducibility initializations
-SEED = 40
-# tf.reset_default_graph()
-# tf.set_random_seed(SEED)
-# np.random.seed(SEED) 
-# random.seed(SEED)
-# env.seed(SEED) 
+if sys.argv[3] != None:
+	SEED = int(sys.argv[3])
+	tf.set_random_seed(SEED)
+	np.random.seed(SEED) 
+	random.seed(SEED)
+	env.seed(SEED) 
 
 
 #function that modifies the output (usually reward) as per directions
@@ -53,20 +55,19 @@ SCALAR_DIM = 1
 
 
 #hyperparameters
-LEARNING_RATE = 0.0001
+LEARNING_RATE = float(sys.argv[1])
 LAMBDA = 0.0
 HIDDEN_DIM = 100
-STD = 0.00001
-BUFFER_SIZE = 2000
+BUFFER_SIZE = int(sys.argv[2])
 MINI_BATCH_SIZE = 512
 MODULO = 5
 
 
 #file names
-MODEL = "a7_"+str(MODULO)
-MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
 year, month, day, hour, minute = time.strftime("%Y,%m,%d,%H,%M").split(',')
-SAVE_FILENAME = SAVE_FOLDER+MODEL+"_"+hour+'_'+minute+'.csv'
+MODEL = "a7_"+str(LEARNING_RATE)+"_"+str(BUFFER_SIZE)+"_"+hour+'_'+minute
+MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
+SAVE_FILENAME = SAVE_FOLDER+MODEL+".csv"
 
 
 #create q learning graph
@@ -74,11 +75,11 @@ SAVE_FILENAME = SAVE_FOLDER+MODEL+"_"+hour+'_'+minute+'.csv'
 #tf functions
 
 #model 2: neural net with HIDDEN_DIM-unit hidden layer
-w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.contrib.layers.xavier_initializer())
+w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
 
-w3 = tf.get_variable("weight3", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-w4 = tf.get_variable("weight4", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+w3 = tf.get_variable("weight3", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.contrib.layers.xavier_initializer())
+w4 = tf.get_variable("weight4", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
 
 #prediction inputs
 s_in = tf.placeholder(tf.float32, [None,STATE_DIM])
@@ -104,7 +105,7 @@ q1_out = tf.matmul(tf.nn.relu(tf.matmul(s_in,w3)), w4) #target network
 
 target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1))
 
-bellman_residual = target - tf.gather_nd(q_out,actions_indices) #q_out[0][a_in[0]] #
+bellman_residual = target - tf.gather_nd(q_out,actions_indices) 
 
 thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
@@ -115,6 +116,8 @@ train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
+	rew_BEST = -999999999.9999999999
+
 	assignOps = [a1,a2]
 
 	losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
@@ -136,7 +139,7 @@ def run():
 			step = -1
 			for episode in range(NUM_EPISODES):
 				if episode%MODULO==0:
-					print("Updating target network...")
+					# print("Updating target network...")
 					for op in assignOps:
 						_ = sess.run(op)
 					# z1,z2,z3,z4 = sess.run([w1,w2,w3,w4])
@@ -223,8 +226,10 @@ def run():
 				bellman_losses[trial,episode] = np.mean(bellman_l1)/ep_steps
 				disc_rewards[trial,episode] = rew
 				aver_moves[trial,episode] = ave
-			saver.save(sess,MODEL_FILENAME)
-			print("Saved model at",MODEL_FILENAME)	
+				if rew > rew_BEST:
+					saver.save(sess,MODEL_FILENAME)
+					print("Saved model at",MODEL_FILENAME, "at average evaluation reward of",rew,", average moves:",ave)
+					rew_BEST = rew	
 
 	# print("losses",losses)
 	# print("bellman", bellman_losses)

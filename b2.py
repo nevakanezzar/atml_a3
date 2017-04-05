@@ -335,7 +335,7 @@ def run():
 				ep_steps += 1
 				s_t = s1_t
 
-		i = steps//EVAL_EVERY + 1
+		i = int(steps//EVAL_EVERY + 1)
 		e_tot_rew = 0
 		for j in range(NUM_EPISODES_EVAL):
 			e_ep_steps = 0
@@ -343,8 +343,8 @@ def run():
 			e_s_t = env.reset()	
 			eS[0] = eS[1] = eS[2] = eS[3] = preprocess_state(e_s_t)
 			while 1:
-				i,_,_ = select.select([sys.stdin],[],[],0)
-				for s in i:
+				inp,_,_ = select.select([sys.stdin],[],[],0)
+				for s in inp:
 					if s == sys.stdin:
 						input = sys.stdin.readline()
 						input = input[:-1].lower()

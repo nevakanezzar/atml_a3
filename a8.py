@@ -53,16 +53,15 @@ SCALAR_DIM = 1
 
 
 #hyperparameters
-LEARNING_RATE = 0.01
+LEARNING_RATE = float(sys.argv[1])
 LAMBDA = 0.0
 HIDDEN_DIM = 100
-STD = 0.001
-
+	
 #file names
-MODEL = "a8"
-MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
 year, month, day, hour, minute = time.strftime("%Y,%m,%d,%H,%M").split(',')
-SAVE_FILENAME = SAVE_FOLDER+MODEL+"_"+hour+'_'+minute+'.csv'
+MODEL = "a8_"+str(LEARNING_RATE)+"_"+hour+'_'+minute
+MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
+SAVE_FILENAME = SAVE_FOLDER+MODEL+".csv"
 
 
 #create q learning graph
@@ -79,8 +78,8 @@ def dummy(x1,x2,x3,x4):
 
 
 #model 2: neural net with HIDDEN_DIM-unit hidden layer
-w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
-w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.contrib.layers.xavier_initializer())
+w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
 
 #prediction inputs
 s_in = tf.placeholder(tf.float32, [None,STATE_DIM])
@@ -113,6 +112,8 @@ train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
+	rew_BEST = -999999999999.99999999999
+
 	losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
 	bellman_losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
 	disc_rewards = np.zeros([NUM_TRIALS,NUM_EPISODES])
@@ -201,8 +202,11 @@ def run():
 				bellman_losses[trial,episode] = bellman_l1
 				disc_rewards[trial,episode] = rew
 				aver_moves[trial,episode] = ave
-			saver.save(sess,MODEL_FILENAME)
-			print("Saved model at",MODEL_FILENAME)	
+				if rew > rew_BEST:
+					saver.save(sess,MODEL_FILENAME)
+					print("Saved model at",MODEL_FILENAME, "at average evaluation reward of",rew,", average moves:",ave)
+					rew_BEST = rew	
+
 
 	# print("losses",losses)
 	# print("bellman", bellman_losses)

@@ -39,7 +39,7 @@ print(data)
 # bellman_losses
 # disc_rewards 
 # aver_moves 
-labels = ['Loss','Bellman residual','Discounted rewards','Average moves']
+labels = ['Bellman Loss','Average distance from target','Discounted rewards','Average moves']
 
 
 data_means = np.mean(data,axis=1)
