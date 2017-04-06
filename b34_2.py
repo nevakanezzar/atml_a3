@@ -280,7 +280,7 @@ def run():
 			if done:
 				train_losses.append(l1/ep_steps)
 				train_bellman.append(bellman_l1/ep_steps)
-				print("Steps:",steps,"\tEpisode steps:",ep_steps,"\tTot rew:",tot_rew,"\tDisc rew:",disc_rew,"\tLoss:",l1/ep_steps,"\tBellman:",bellman_l1/ep_steps)
+				print("Steps:",steps,"\tEpisode steps:",ep_steps,"\tTot rew:",tot_rew,"\tDisc rew:",disc_rew,"\tLoss:",l1/ep_steps,"\tBellman:",bellman_l1/ep_steps, flush=True)
 				
 				if steps > next_eval:  #if more than evaluation checkpoint, eval
 					next_eval += EVAL_EVERY
