@@ -212,7 +212,7 @@ with tf.device('/gpu:0'):
 	reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
 	loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
-	train_op = tf.train.RMSPropOptimizer(LEARNING_RATE).minimize(loss)
+	train_op = tf.train.AdamOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
@@ -344,6 +344,7 @@ def run():
 						test_steps[i,j] = e_ep_steps
 						test_disc_rew[i,j] = e_ep_disc_rew
 
+					saver.save(sess,MODEL_FILENAME+"_"+str(i))
 					e_avg_steps = np.mean(test_steps[i,:])
 					e_avg_disc_rew = np.mean(test_disc_rew[i,:])
 					e_avg_tot_rew = float(e_tot_rew)/NUM_EPISODES_EVAL
