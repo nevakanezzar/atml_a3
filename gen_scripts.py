@@ -9,8 +9,8 @@ for g in games:
 	for l in learning_rates:
 		for d in discount_factor:
 			filename = "b_"+g+l+d+".sh"
-			text = ["#$ -l tmem=2G\n",
-					"#$ -l h_vmem=2G\n",
+			text = ["#$ -l tmem=4G\n",
+					"#$ -l h_vmem=4G\n",
 					"#$ -l h_rt=36:00:00\n",
 					"#$ -S /bin/bash\n",
 					# "#$ -j y\n",
@@ -18,7 +18,7 @@ for g in games:
 					# "#$ -pe smp 4\n",
 					"hostname\n",
 					"date\n",
-					"python3 ~/git/atml_a3/b34.py "+g+" "+l+" "+d+"\n"]
+					"python3 ~/git/atml_a3/b34_2.py "+g+" "+l+" "+d+"\n"]
 			with open(filename,'w') as f:
 				f.write("".join(text))	
 			files.append(filename)
