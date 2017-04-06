@@ -8,27 +8,23 @@ import time
 from PIL import Image
 import select
 
-
 try:
 	GAME_INDEX = int(sys.argv[1])
-	LEARNING_RATE = float(sys.argv[2])
-	DISCOUNT_STARTING_FACTOR = int(sys.argv[3])
+	NUM_EPISODES = int(sys.argv[2])
 except:
-	print("Something went wrong. Signature is game_index learning_rate discount_starting_factor")
-
-
-#arguments
-# GAME_INDEX = 2
+	print("Something went wrong. Signature is game_index num_episodes [seed]")
+	sys.exit()
 
 #constants
 GAMES = ['Pong-v3','MsPacman-v3','Boxing-v3']
 DISCOUNT = 0.99
-EPSILON = 1
 FRAMES = 4
+EPSILON = 0.1
 MODULO = 5000  # TO DO 5000
 NUM_STEPS = 1000000  # TO DO 1000000
 NUM_EPISODES_EVAL = 100 # TO DO 100
 EVAL_EVERY = 50000 #TO DO 50000
+LEARNING_RATE = 0.1 # doesn't matter for this one, training op is never run
 
 #initialise environment
 game = GAMES[GAME_INDEX]
@@ -42,19 +38,15 @@ print('Game : '+game)
 print('Possible actions : {}'.format(ACTION_DIM))
 
 
-#filenames
-SAVE_FOLDER = './save/'
-MODEL_FOLDER = './model/'
-TENSORBOARD_FOLDER = '.'
-
+tf.reset_default_graph()
 
 #reproducibility initializations
-SEED = 40
-# tf.reset_default_graph()
-# tf.set_random_seed(SEED)
-# np.random.seed(SEED) 
-# random.seed(SEED)
-# env.seed(SEED) 
+if len(sys.argv) == 4:
+	SEED = min(int(sys.argv[3]),0)
+	env.seed(SEED) 
+	tf.set_random_seed(SEED)
+	np.random.seed(SEED) 
+	random.seed(SEED)
 
 
 #function that modifies the output (usually reward) as per directions
@@ -88,20 +80,11 @@ MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
 
 
-#file names
-year, month, day, hour, minute = time.strftime("%Y,%m,%d,%H,%M").split(',')
-MODEL = "b34_"+sys.argv[1]+"_"+sys.argv[2]+"_"+sys.argv[3]+"_"+hour+'_'+minute
-MODEL_FILENAME = MODEL_FOLDER+MODEL+".model"
-TRAIN_SAVE_FILENAME = SAVE_FOLDER+MODEL+"train.csv"
-TEST_SAVE_FILENAME = SAVE_FOLDER+MODEL+"test.csv"
-
-
-tf.reset_default_graph()
 #create q learning graph
 
 #tf functions
 
-with tf.device('/cpu:0'):
+with tf.device('/gpu:0'):
 	#prediction inputs
 	s_in = tf.placeholder(tf.float32, [None,FRAMES, STATE_X, STATE_Y])
 	a_in = tf.placeholder(tf.int32, [None])
@@ -193,168 +176,42 @@ with tf.device('/cpu:0'):
 
 
 def run():
-	e_avg_disc_rew_BEST = -99999999999999.9999999999
-
-	assignOps = [a1,a2,a3,a4,a5,a6,a7,a8]
-	S = np.zeros([BUFFER_SIZE+2*FRAMES, STATE_X, STATE_Y],dtype=np.uint8)
-	A = np.zeros([BUFFER_SIZE+2*FRAMES, SCALAR_DIM],dtype=np.uint8)
-	R = np.zeros([BUFFER_SIZE+2*FRAMES, SCALAR_DIM],dtype=np.int8)
-	ND = np.zeros([BUFFER_SIZE+2*FRAMES, SCALAR_DIM],dtype=np.uint8)
-	
-	train_losses = []
-	train_bellman = []
-	test_steps = np.zeros([NUM_STEPS//EVAL_EVERY+2,NUM_EPISODES_EVAL])
-	test_disc_rew = np.zeros([NUM_STEPS//EVAL_EVERY+2,NUM_EPISODES_EVAL])
-	
-	next_eval = EVAL_EVERY
+	inp2 = ''
+	test_steps = np.zeros(NUM_EPISODES)
+	test_d_rew = np.zeros(NUM_EPISODES)
+	test_t_rew = np.zeros(NUM_EPISODES)
 	eS = np.zeros([4, STATE_X, STATE_Y],dtype=np.uint8)
-
+	
 	init_op = tf.global_variables_initializer()
-	saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)
-	with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=True)) as sess:
-
+	with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
 		sess.run(init_op)
-
-		input = ""
-		ep_steps = 0
-		l1 = 0.0
-		bellman_l1 = 0.0
-		disc_rew = tot_rew = 0.0
-		s_t = env.reset()	
-		S[0] = S[1] = S[2] = S[3] = preprocess_state(s_t)
-
-		for steps in range(FRAMES-1,NUM_STEPS+FRAMES-1):
-			
-			inp,_,_ = select.select([sys.stdin],[],[],0)
-			for s in inp:
-				if s == sys.stdin:
-					input = sys.stdin.readline()
-					input = input[:-1].lower()
-			
-			EPSILON = (0.9 * 0.99999**(DISCOUNT_STARTING_FACTOR+steps)) + 0.1
-			if np.random.random()>EPSILON:
-				S_in = np.take(S,[range((steps%BUFFER_SIZE)-FRAMES+1,(steps%BUFFER_SIZE)+1)], axis=0)
-				qs = sess.run(q_out,feed_dict={s_in:S_in})
-				a_t = np.argmax(qs)				
-			else:
-				a_t = np.random.choice(ACTION_DIM)
-			s1_t, r_t, done, info = env.step(a_t)
-			s1_t, r_t, not_done, info = modify_outputs(s1_t, r_t, done, info)
-			if input=='r': env.render()
-			tot_rew += r_t
-			disc_rew += r_t * DISCOUNT**ep_steps
-
-			A[steps%BUFFER_SIZE] = a_t
-			R[steps%BUFFER_SIZE] = r_t
-			S[(steps+1)%BUFFER_SIZE] = preprocess_state(s1_t)
-			ND[steps%BUFFER_SIZE] = not_done
-
-			ind_starts = np.random.choice(min(steps+1,BUFFER_SIZE)-FRAMES+1,MINI_BATCH_SIZE)
-			ind_ends = ind_starts + FRAMES
-			inds_S = [range(i,i+FRAMES) for i in ind_starts]
-			inds_S1 = [range(i+1,i+1+FRAMES) for i in ind_starts]
-
-			S_in = np.take(S,inds_S, axis=0)
-			A_in = np.take(A,ind_ends)
-			R_in = np.take(R,ind_ends)
-			S1_in = np.take(S,inds_S1, axis=0)
-			ND_in = np.take(ND,ind_ends)
-
-			if steps%MODULO==0:
-				# print("Updating target network...")
-				for op in assignOps:
-					_ = sess.run(op)
-
-			[l2,bellman_l2,_] = sess.run([loss,bellman_residual,train_op], feed_dict={
-									s_in:S_in,
-									a_in:A_in,
-									r_in:R_in,
-									s1_in:S1_in,
-									discount_in:DISCOUNT,
-									row_indices_in:np.arange(len(S_in)),
-									not_done_in:ND_in
-									})
-			l1 += l2
-			bellman_l1 += np.mean(bellman_l2)
-
-			if done:
-				train_losses.append(l1/ep_steps)
-				train_bellman.append(bellman_l1/ep_steps)
-				print("Steps:",steps,"\tEpisode steps:",ep_steps,"\tTot rew:",tot_rew,"\tDisc rew:",disc_rew,"\tLoss:",l1/ep_steps,"\tBellman:",bellman_l1/ep_steps)
-				
-				if steps > next_eval:  #if more than evaluation checkpoint, eval
-					next_eval += EVAL_EVERY
-					i = steps//EVAL_EVERY
-					e_tot_rew = 0
-					for j in range(NUM_EPISODES_EVAL):
-						e_ep_steps = 0
-						e_ep_disc_rew = 0.0
-						e_s_t = env.reset()	
-						eS[0] = eS[1] = eS[2] = eS[3] = preprocess_state(e_s_t)
-						while 1:
-							inp,_,_ = select.select([sys.stdin],[],[],0)
-							for s in inp:
-								if s == sys.stdin:
-									input = sys.stdin.readline()
-									input = input[:-1].lower()
-							qs = sess.run(q_out,feed_dict={s_in:[eS]})
-							e_a_t = np.argmax(qs)				
-							e_s1_t, e_r_t, e_done, e_info = env.step(e_a_t)
-							e_s1_t, e_r_t, e_not_done, e_info = modify_outputs(e_s1_t, e_r_t, e_done, e_info)
-							if input=='r': env.render()
-							e_tot_rew += e_r_t
-							e_ep_disc_rew += e_r_t * DISCOUNT**e_ep_steps
-							e_ep_steps += 1
-							if e_done:
-								break
-							else:
-								eS[0:3]=eS[1:4]
-								eS[3] = preprocess_state(e_s1_t)
-
-						test_steps[i,j] = e_ep_steps
-						test_disc_rew[i,j] = e_ep_disc_rew
-
-					e_avg_steps = np.mean(test_steps[i,:])
-					e_avg_disc_rew = np.mean(test_disc_rew[i,:])
-					e_avg_tot_rew = float(e_tot_rew)/NUM_EPISODES_EVAL
-					print("Evaluation over",NUM_EPISODES_EVAL,"episodes at",steps,"steps | Avg steps:",e_avg_steps,"Avg tot rew:",e_avg_tot_rew,"Avg disc rew:",e_avg_disc_rew)
-					if e_avg_disc_rew > e_avg_disc_rew_BEST:
-						e_avg_disc_rew_BEST = e_avg_disc_rew 
-						saver.save(sess,MODEL_FILENAME)
-						print("Saved model at",MODEL_FILENAME)
-
-
-				ep_steps = 0
-				l1 = 0.0
-				bellman_l1 = 0.0
-				disc_rew = tot_rew = 0.0
-				s_t = env.reset()
-				S[(steps+1)%BUFFER_SIZE] = preprocess_state(s_t)
-
-			else:
-				ep_steps += 1
-				s_t = s1_t
-
-		i = int(steps//EVAL_EVERY + 1)
-		e_tot_rew = 0
-		for j in range(NUM_EPISODES_EVAL):
-			e_ep_steps = 0
-			e_ep_disc_rew = 0.0
-			e_s_t = env.reset()	
+	
+		for j in range(NUM_EPISODES):
+			e_ep_t_rew = 0
+			e_ep_d_rew = 0
+			e_ep_steps = 1
+			e_s_t = env.reset()
 			eS[0] = eS[1] = eS[2] = eS[3] = preprocess_state(e_s_t)
+
 			while 1:
+
+				#render environment if 'r' key entered
 				inp,_,_ = select.select([sys.stdin],[],[],0)
 				for s in inp:
 					if s == sys.stdin:
-						input = sys.stdin.readline()
-						input = input[:-1].lower()
+						inp2 = sys.stdin.readline()
+						inp2 = inp2[0].lower()
+				if inp2=='r': 
+					env.render()
+				else:
+					env.render(close=True)
+
 				qs = sess.run(q_out,feed_dict={s_in:[eS]})
 				e_a_t = np.argmax(qs)				
 				e_s1_t, e_r_t, e_done, e_info = env.step(e_a_t)
-				e_s1_t, e_r_t, e_not_done, e_info = modify_outputs(e_s1_t, e_r_t, e_done, e_info)
-				if input=='r': env.render()
-				e_tot_rew += e_r_t
-				e_ep_disc_rew += e_r_t * DISCOUNT**e_ep_steps
+				
+				e_ep_t_rew += e_r_t
+				e_ep_d_rew += e_r_t * DISCOUNT**e_ep_steps
 				e_ep_steps += 1
 				if e_done:
 					break
@@ -362,33 +219,24 @@ def run():
 					eS[0:3]=eS[1:4]
 					eS[3] = preprocess_state(e_s1_t)
 
-			test_steps[i,j] = e_ep_steps
-			test_disc_rew[i,j] = e_ep_disc_rew
 
-		e_avg_steps = np.mean(test_steps[i,:])
-		e_avg_disc_rew = np.mean(test_disc_rew[i,:])
-		e_avg_tot_rew = float(e_tot_rew)/NUM_EPISODES_EVAL
-		print("Evaluation over",NUM_EPISODES_EVAL,"episodes at",steps,"steps | Avg steps:",e_avg_steps,"Avg tot rew:",e_avg_tot_rew,"Avg disc rew:",e_avg_disc_rew)
-		if e_avg_disc_rew > e_avg_disc_rew_BEST:
-			e_avg_disc_rew_BEST = e_avg_disc_rew 
-			saver.save(sess,MODEL_FILENAME)
-			print("Saved model at",MODEL_FILENAME)
+			test_steps[j] = e_ep_steps
+			test_d_rew[j] = e_ep_d_rew
+			test_t_rew[j] = e_ep_t_rew
 
-		# saver.save(sess,MODEL_FILENAME)
-		# print("Saved model at",MODEL_FILENAME)
+			e_avg_steps = np.mean(test_steps)
+			e_avg_d_rew = np.mean(test_d_rew)
+			e_avg_t_rew = np.mean(test_t_rew)
 
-	concat = np.concatenate([train_losses,train_bellman])
-	with open(TRAIN_SAVE_FILENAME,'wb') as f:
-		np.savetxt(TRAIN_SAVE_FILENAME, concat, fmt='%.5f',delimiter=",")
-	print("Saved training stats to:",TRAIN_SAVE_FILENAME)
+			e_std_steps = np.std(test_steps)
+			e_std_d_rew = np.std(test_d_rew)
+			e_std_t_rew = np.std(test_t_rew)
 
-	concat = np.concatenate([test_steps,test_disc_rew])
-	with open(TEST_SAVE_FILENAME,'wb') as f:
-		np.savetxt(TEST_SAVE_FILENAME, concat, fmt='%.5f',delimiter=",")
-	print("Saved testing stats to:",TEST_SAVE_FILENAME)
-
-
-	return None
+		print("Evaluation over",NUM_EPISODES,"episodes")
+		print("Avg steps:",e_avg_steps,"Standard deviation:",e_std_steps)
+		print("Avg tot rew:",e_avg_t_rew,"Standard deviation:",e_std_t_rew)
+		print("Avg disc rew:",e_avg_d_rew,"Standard deviation:",e_std_d_rew)
+	
 	
 
 run()

@@ -68,15 +68,6 @@ SAVE_FILENAME = SAVE_FOLDER+MODEL+".csv"
 
 #tf functions
 
-def copy(x1,x2,x3,x4):
-	x3 = x1
-	x4 = x2
-	return tf.constant(1)
-
-def dummy(x1,x2,x3,x4):
-	return tf.constant(1)
-
-
 #model 2: neural net with HIDDEN_DIM-unit hidden layer
 w1 = tf.get_variable("weight1", shape=[STATE_DIM, HIDDEN_DIM], initializer=tf.contrib.layers.xavier_initializer())
 w2 = tf.get_variable("weight2", shape=[HIDDEN_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
