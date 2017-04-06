@@ -96,7 +96,7 @@ TRAIN_SAVE_FILENAME = SAVE_FOLDER+MODEL+"train.csv"
 TEST_SAVE_FILENAME = SAVE_FOLDER+MODEL+"test.csv"
 
 
-tf.reset_default_graph()
+# tf.reset_default_graph()
 #create q learning graph
 
 #tf functions

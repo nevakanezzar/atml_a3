@@ -1,6 +1,6 @@
 
 games = ['0','1','2']
-learning_rates = ['0.5','0.1','0.01','0.001','0.0001','0.00001']
+learning_rates = ['0.1','0.01','0.001','0.0001','0.00001']
 discount_factor = ['0','500000']
 
 files = []
@@ -9,8 +9,8 @@ for g in games:
 	for l in learning_rates:
 		for d in discount_factor:
 			filename = "b_"+g+l+d+".sh"
-			text = ["#$ -l tmem=4G\n",
-					"#$ -l h_vmem=1G\n",
+			text = ["#$ -l tmem=2G\n",
+					"#$ -l h_vmem=2G\n",
 					"#$ -l h_rt=36:00:00\n",
 					"#$ -S /bin/bash\n",
 					# "#$ -j y\n",
