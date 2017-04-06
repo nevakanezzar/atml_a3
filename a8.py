@@ -39,8 +39,10 @@ SEED = 40
 
 
 #function that modifies the output (usually reward) as per directions
-def modify_outputs(obs, rew, ter, inf): 
-	if ter == True:
+def modify_outputs(obs, rew, ter, inf, steps): 
+	if steps == MAX_EPISODE_LEN:
+		rew = 0
+	elif ter == True:
 		rew = -1
 	else:
 		rew = 0	
@@ -133,7 +135,7 @@ def run():
 				while 1:	
 					#take a step in the env 
 					s1_t, r_t, done, info = env.step(a_t)
-					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info)
+					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info,steps+1)
 					not_done = (not done)*1.0
 					#select action
 					if np.random.random()>EPSILON:
@@ -174,7 +176,7 @@ def run():
 						a_t = np.argmax(qs)
 						# print(qs,a_t)
 						s_t, r_t, done, info = env.step(a_t)
-						s_t, r_t, done, info = modify_outputs(s_t, r_t, done, info)
+						s_t, r_t, done, info = modify_outputs(s_t, r_t, done, info,t+1)
 						episode_reward += cumulative_discount*r_t
 						cumulative_discount = cumulative_discount * DISCOUNT
 						if info != {}: print(info)

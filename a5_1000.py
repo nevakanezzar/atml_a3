@@ -39,8 +39,10 @@ SEED = 40
 
 
 #function that modifies the output (usually reward) as per directions
-def modify_outputs(obs, rew, ter, inf): 
-	if ter == True:
+def modify_outputs(obs, rew, ter, inf, steps): 
+	if steps == MAX_EPISODE_LEN:
+		rew = 0
+	elif ter == True:
 		rew = -1
 	else:
 		rew = 0	
@@ -137,7 +139,7 @@ def run():
 					
 					#take a step in the env 
 					s_t1, r_t1, done, info = env.step(a_t)
-					s_t1, r_t1, done, info = modify_outputs(s_t1, r_t1, done, info)
+					s_t1, r_t1, done, info = modify_outputs(s_t1, r_t1, done, info,steps+1)
 					not_done = not done
 
 					#learn
@@ -170,7 +172,7 @@ def run():
 						a_t = np.argmax(qs)
 						# print(qs,a_t)
 						s_t, r_t1, done, info = env.step(a_t)
-						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info)
+						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info,t+1)
 						episode_reward += cumulative_discount*r_t1
 						cumulative_discount = cumulative_discount * DISCOUNT
 						if info != {}: print(info)
@@ -181,7 +183,7 @@ def run():
 					reward_per_episode[episode_eval] = episode_reward
 				ave = np.mean(time_per_episode)
 				rew = np.mean(reward_per_episode)
-				if episode%100==0:
+				if episode%1==0:
 					print("Trial:",trial,"Episode", episode,"loss:",'{0:.4f}'.format(l1),"\tAverage performance over",NUM_EPISODES_EVAL,"evaluation trials: Moves",'{0:.3f}'.format(ave),"| Reward",'{0:.4f}'.format(rew))
 				losses[trial,episode] = l1
 				bellman_losses[trial,episode] = bellman_l1

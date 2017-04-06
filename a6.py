@@ -19,6 +19,16 @@ SAVE_FOLDER = './save/'
 MODEL_FOLDER = './model/'
 TENSORBOARD_FOLDER = '.'
 
+try:
+	LEARNING_RATE = float(sys.argv[1])
+	BUFFER_SIZE = int(sys.argv[2])
+except:
+	print("Something went wrong. Signature is learning_rate buffer_size [seed]")
+	sys.exit()
+else:
+	pass
+finally:
+	pass
 
 #initialise environment
 gym.envs.register(
@@ -31,7 +41,7 @@ env = gym.make('CartPoleModified-v0')
 tf.reset_default_graph()
 
 #reproducibility initializations
-if sys.argv[3] != None:
+if len(sys.argv) == 4:
 	SEED = int(sys.argv[3])
 	tf.set_random_seed(SEED)
 	np.random.seed(SEED) 
@@ -40,8 +50,10 @@ if sys.argv[3] != None:
 
 
 #function that modifies the output (usually reward) as per directions
-def modify_outputs(obs, rew, ter, inf): 
-	if ter == True:
+def modify_outputs(obs, rew, ter, inf, steps): 
+	if steps == MAX_EPISODE_LEN:
+		rew = 0
+	elif ter == True:
 		rew = -1
 	else:
 		rew = 0	
@@ -54,10 +66,8 @@ SCALAR_DIM = 1
 
 
 #hyperparameters
-LEARNING_RATE = float(sys.argv[1])
 LAMBDA = 0.0
 HIDDEN_DIM = 100
-BUFFER_SIZE = int(sys.argv[2])
 MINI_BATCH_SIZE = 512
 	
 #file names
@@ -147,7 +157,7 @@ def run():
 
 					#take a step in the env 
 					s1_t, r_t, done, info = env.step(a_t)
-					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info)
+					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info,ep_steps+1)
 					not_done = (not done)*1.0
 					S_BUFF[step%BUFFER_SIZE] = s_t
 					A_BUFF[step%BUFFER_SIZE] = a_t
@@ -193,7 +203,7 @@ def run():
 						a_t = np.argmax(qs)
 						# print(qs,a_t)
 						s_t, r_t1, done, info = env.step(a_t)
-						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info)
+						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info,t+1)
 						episode_reward += cumulative_discount*r_t1
 						cumulative_discount = cumulative_discount * DISCOUNT
 						if info != {}: print(info)

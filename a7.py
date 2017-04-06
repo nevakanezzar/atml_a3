@@ -14,11 +14,21 @@ MAX_EPISODE_LEN = 300
 NUM_EPISODES_EVAL = 10
 NUM_TRIALS = 1
 
-#filenames
+#folder names
 SAVE_FOLDER = './save/'
 MODEL_FOLDER = './model/'
 TENSORBOARD_FOLDER = '.'
 
+try:
+	LEARNING_RATE = float(sys.argv[1])
+	BUFFER_SIZE = int(sys.argv[2])
+except:
+	print("Something went wrong. Signature is learning_rate buffer_size [seed]")
+	sys.exit()
+else:
+	pass
+finally:
+	pass
 
 #initialise environment
 gym.envs.register(
@@ -32,7 +42,7 @@ env = gym.make('CartPoleModified-v0')
 tf.reset_default_graph()
 
 #reproducibility initializations
-if sys.argv[3] != None:
+if len(sys.argv) == 4:
 	SEED = int(sys.argv[3])
 	tf.set_random_seed(SEED)
 	np.random.seed(SEED) 
@@ -41,8 +51,10 @@ if sys.argv[3] != None:
 
 
 #function that modifies the output (usually reward) as per directions
-def modify_outputs(obs, rew, ter, inf): 
-	if ter == True:
+def modify_outputs(obs, rew, ter, inf, steps): 
+	if steps == MAX_EPISODE_LEN:
+		rew = 0
+	elif ter == True:
 		rew = -1
 	else:
 		rew = 0	
@@ -55,10 +67,8 @@ SCALAR_DIM = 1
 
 
 #hyperparameters
-LEARNING_RATE = float(sys.argv[1])
 LAMBDA = 0.0
 HIDDEN_DIM = 100
-BUFFER_SIZE = int(sys.argv[2])
 MINI_BATCH_SIZE = 512
 MODULO = 5
 
@@ -163,7 +173,7 @@ def run():
 
 					#take a step in the env 
 					s1_t, r_t, done, info = env.step(a_t)
-					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info)
+					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info,ep_steps+1)
 					not_done = (not done)*1.0
 					S_BUFF[step%BUFFER_SIZE] = s_t
 					A_BUFF[step%BUFFER_SIZE] = a_t
@@ -209,7 +219,7 @@ def run():
 						a_t = np.argmax(qs)
 						# print(qs,a_t)
 						s_t, r_t1, done, info = env.step(a_t)
-						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info)
+						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info,t+1)
 						episode_reward += cumulative_discount*r_t1
 						cumulative_discount = cumulative_discount * DISCOUNT
 						if info != {}: print(info)
@@ -250,105 +260,4 @@ if __name__ == '__main__':
 
 
 
-
-
-
-
-
-# def run():
-# 	losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
-# 	bellman_losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
-# 	disc_rewards = np.zeros([NUM_TRIALS,NUM_EPISODES])
-# 	aver_moves = np.zeros([NUM_TRIALS,NUM_EPISODES])
-
-# 	for trial in range(NUM_TRIALS):
-# 		init_op = tf.global_variables_initializer()
-# 		saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)
-# 		with tf.Session() as sess:
-# 			sess.run(init_op)	# init vars
-# 			for episode in range(NUM_EPISODES):
-# 				s_t = env.reset()
-# 				l1 = 0.0
-# 				bellman_l1 = 0.0
-# 				steps = 0
-# 				#first we train:
-# 				while 1:
-# 					#select action
-# 					if np.random.random()>EPSILON:
-# 						qs = sess.run(q_out,feed_dict={s_in:np.expand_dims(s_t,axis=0)})
-# 						a_t = np.argmax(qs)				
-# 					else:
-# 						a_t = np.random.choice(ACTION_DIM)
-# 					steps+=1
-					
-# 					#take a step in the env 
-# 					s_t1, r_t1, done, info = env.step(a_t)
-# 					s_t1, r_t1, done, info = modify_outputs(s_t1, r_t1, done, info)
-# 					not_done = not done
-
-# 					#learn
-# 					[l2,bellman_l2,_] = sess.run([loss,bellman_residual,train_op], feed_dict={
-# 									s_in:np.array([s_t]),
-# 									a_in:np.array([a_t]),
-# 									r_in:np.array([r_t1]),
-# 									s1_in:np.array([s_t1]),
-# 									discount_in:DISCOUNT,
-# 									row_indices_in:np.arange(1),
-# 									not_done_in:np.array([not_done*1]),
-# 									current_iter:int(episode),
-# 									modulo:int(MODULO)
-# 									})
-# 					l1 += l2
-# 					bellman_l1 += bellman_l2
-# 					if done == True:
-# 						break
-# 					s_t = s_t1
-
-
-# 				#then we evaluate:
-# 				ave = 0
-# 				time_per_episode = np.zeros(NUM_EPISODES_EVAL)
-# 				reward_per_episode = np.zeros(NUM_EPISODES_EVAL)
-# 				for episode_eval in range(NUM_EPISODES_EVAL):
-# 					s_t = env.reset()
-# 					episode_reward = 0.0
-# 					cumulative_discount = 1.0
-# 					for t in range(MAX_EPISODE_LEN):
-# 						qs = sess.run(q_out,feed_dict={s_in:np.expand_dims(s_t,axis=0)})
-# 						a_t = np.argmax(qs)
-# 						# print(qs,a_t)
-# 						s_t, r_t1, done, info = env.step(a_t)
-# 						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info)
-# 						episode_reward += cumulative_discount*r_t1
-# 						cumulative_discount = cumulative_discount * DISCOUNT
-# 						if info != {}: print(info)
-# 						if done:
-# 							break
-# 					# print(t)
-# 					time_per_episode[episode_eval] = t+1
-# 					reward_per_episode[episode_eval] = episode_reward
-# 				ave = np.mean(time_per_episode)
-# 				rew = np.mean(reward_per_episode)
-# 				l1 = l1/steps
-# 				bellman_l1 = bellman_l1/steps
-# 				if episode%1==0:
-# 					print("Trial:",trial,"Episode", episode,"loss:",'{0:.4f}'.format(l1),"\tAverage performance over",NUM_EPISODES_EVAL,"evaluation trials: Moves",'{0:.3f}'.format(ave),"| Reward",'{0:.4f}'.format(rew))
-# 				losses[trial,episode] = l1
-# 				bellman_losses[trial,episode] = bellman_l1
-# 				disc_rewards[trial,episode] = rew
-# 				aver_moves[trial,episode] = ave
-# 			saver.save(sess,MODEL_FILENAME)
-# 			print("Saved model at",MODEL_FILENAME)	
-
-# 	# print("losses",losses)
-# 	# print("bellman", bellman_losses)
-# 	# print("disc_rew", disc_rewards)
-# 	# print("aver_moves",aver_moves)
-
-# 	concat = np.concatenate([losses,bellman_losses,disc_rewards,aver_moves])
-# 	# print(concat)
-
-# 	print(SAVE_FILENAME)
-# 	with open(SAVE_FILENAME,'wb') as f:
-# 		np.savetxt(SAVE_FILENAME, concat,delimiter=",")
 

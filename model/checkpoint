@@ -1,2 +1,2 @@
-model_checkpoint_path: "a8_0.1_16_11.model"
-all_model_checkpoint_paths: "a8_0.1_16_11.model"
+model_checkpoint_path: "a7_0.01_2000_23_41.model"
+all_model_checkpoint_paths: "a7_0.01_2000_23_41.model"

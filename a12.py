@@ -29,7 +29,7 @@ for episode in range(3):
 	for t in range(MAX_EP_LEN):
 		#env.render()
 		action = env.action_space.sample()
-		print(observation, action)
+		print(observation, action,"\\newline")
 		observation, _, done, info = env.step(action)
 		if done == True:
 			reward = -1
@@ -38,7 +38,8 @@ for episode in range(3):
 		episode_reward += cumulative_discount*reward #modifies reward to 0 on non-terminating steps and -1 on termination
 		cumulative_discount = cumulative_discount * DISCOUNT
 		if done:
-			print("Episode finished after {} timesteps".format(t+1),"\tReward from initial state is {}".format(episode_reward))
+			print(observation,"\\newline")
+			print("Episode finished after {} timesteps".format(t+1),"\tReward from initial state is {}".format(episode_reward),"\\newline")
 			break
 
 
@@ -65,8 +66,8 @@ for episode in range(NUM_EPS):
 			reward_per_episode[episode] = episode_reward
 			break
 
-print("Mean and std. of episode times:", np.mean(time_per_episode), np.std(time_per_episode))
-print("Mean and std. of episode rewards:", np.mean(reward_per_episode), np.std(reward_per_episode))
+print("Mean and stddev. of episode times:", np.mean(time_per_episode), np.std(time_per_episode))
+print("Mean and stddev. of episode rewards:", np.mean(reward_per_episode), np.std(reward_per_episode))
 
 
 

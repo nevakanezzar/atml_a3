@@ -38,8 +38,10 @@ SEED = 189
 
 
 #function that modifies the output (usually reward) as per directions
-def modify_outputs(obs, rew, ter, inf): 
-	if ter == True:
+def modify_outputs(obs, rew, ter, inf, steps): 
+	if steps == MAX_EPISODE_LEN:
+		rew = 0
+	elif ter == True:
 		rew = -1
 	else:
 		rew = 0	
@@ -58,7 +60,7 @@ for episode in range(NUM_EPISODES):
 	for t in range(MAX_EPISODE_LEN):
 		a_t = env.action_space.sample()
 		s_t1, r_t1, done, info = env.step(a_t)
-		s_t1, r_t1, done, info = modify_outputs(s_t1, r_t1, done, info)
+		s_t1, r_t1, done, info = modify_outputs(s_t1, r_t1, done, info,t+1)
 		experience.append([s_t,a_t,r_t1,s_t1])
 		if done:
 			break
@@ -90,7 +92,7 @@ except:
 	sys.exit(0)
 LAMBDA = 0.0
 HIDDEN_DIM = 100
-NUM_EPOCHS = 2000
+NUM_EPOCHS = 500
 MINI_BATCH_SIZE = T//5
 MINI_BATCHES = T//MINI_BATCH_SIZE
 STD = 0.05
@@ -200,7 +202,7 @@ def run():
 						a_t = np.argmax(qs)
 						# print(qs,a_t)
 						s_t, r_t1, done, info = env.step(a_t)
-						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info)
+						s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info,t+1)
 						if inp2 == 'r':
 							env.render()
 						else:
