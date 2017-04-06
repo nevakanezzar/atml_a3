@@ -1,5 +1,3 @@
-qsub b_00.50.sh
-qsub b_00.5500000.sh
 qsub b_00.10.sh
 qsub b_00.1500000.sh
 qsub b_00.010.sh
@@ -10,8 +8,6 @@ qsub b_00.00010.sh
 qsub b_00.0001500000.sh
 qsub b_00.000010.sh
 qsub b_00.00001500000.sh
-qsub b_10.50.sh
-qsub b_10.5500000.sh
 qsub b_10.10.sh
 qsub b_10.1500000.sh
 qsub b_10.010.sh
@@ -22,8 +18,6 @@ qsub b_10.00010.sh
 qsub b_10.0001500000.sh
 qsub b_10.000010.sh
 qsub b_10.00001500000.sh
-qsub b_20.50.sh
-qsub b_20.5500000.sh
 qsub b_20.10.sh
 qsub b_20.1500000.sh
 qsub b_20.010.sh
