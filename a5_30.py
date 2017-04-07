@@ -207,11 +207,62 @@ def run():
 	with open(SAVE_FILENAME,'wb') as f:
 		np.savetxt(SAVE_FILENAME, concat,delimiter=",")
 
+
+
+def load(LOAD_FILENAME):
+	inp2 = ''
+	EVAL_TRIALS = 100
+	with tf.Session() as sess:
+		saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)  
+		saver.restore(sess,LOAD_FILENAME)
+		ave = 0
+		time_per_episode = np.zeros(EVAL_TRIALS)
+		reward_per_episode = np.zeros(EVAL_TRIALS)
+		for episode_eval in range(EVAL_TRIALS):
+			s_t = env.reset()
+			episode_reward = 0.0
+			cumulative_discount = 1.0
+			for t in range(MAX_EPISODE_LEN):
+
+				inp,_,_ = select.select([sys.stdin],[],[],0)
+				for s in inp:
+					if s == sys.stdin:
+						inp2 = sys.stdin.readline()
+						inp2 = inp2[:-1].lower()
+
+				qs = sess.run(q_out,feed_dict={s_in:np.expand_dims(s_t,axis=0)})
+				a_t = np.argmax(qs)
+				# print(qs,a_t)
+				s_t, r_t1, done, info = env.step(a_t)
+				s_t, r_t1, done, info = modify_outputs(s_t, r_t1, done, info, t+1)
+				if inp2 == 'r':
+					env.render()
+				else:
+					env.render(close=True)
+				episode_reward += cumulative_discount*r_t1
+				cumulative_discount = cumulative_discount * DISCOUNT
+				if info != {}: print(info)
+				if done:
+					break
+			# print(t)
+			time_per_episode[episode_eval] = t+1
+			reward_per_episode[episode_eval] = episode_reward
+			print("Trial:",episode_eval,"\tMoves",'{0:.3f}'.format(t+1),"| Reward",'{0:.4f}'.format(episode_reward))
+		ave = np.mean(time_per_episode)
+		rew = np.mean(reward_per_episode)
+		print("Average performance over",EVAL_TRIALS,"evaluation trials: Moves",'{0:.3f}'.format(ave),"| Reward",'{0:.4f}'.format(rew))
+
+
+
 if __name__ == '__main__':
-	run()
-
-
-
-
-
+	if len(sys.argv)>2:
+		if sys.argv[2].lower() == '-e':
+			try:
+				FILENAME = sys.argv[3]
+				LOAD_FILENAME = MODEL_FOLDER+FILENAME+".model"
+			except:
+				print("Something went wrong, try providing a valid filename after the -e flag")
+			load(LOAD_FILENAME)
+	else:
+		run()
 
