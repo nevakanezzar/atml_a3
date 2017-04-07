@@ -1,2 +1,3 @@
-model_checkpoint_path: "a3a_0.01_15_18.model"
-all_model_checkpoint_paths: "a3a_0.01_15_18.model"
+model_checkpoint_path: "b34_1_0.0001_0_17_05.model"
+all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model_1"
+all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model"
