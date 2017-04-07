@@ -109,6 +109,7 @@ def preprocess_state(input_img):
 BUFFER_SIZE = 100000  #TO DO 100000
 MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
+STD = 0.01
 
 
 #file names
@@ -160,24 +161,24 @@ with tf.device('/gpu:0'):
 	FC_OUT_DIM = 256
 
 	#q_sa network variables
-	W1 = tf.get_variable("weight1", shape=c1_shape, initializer=tf.contrib.layers.xavier_initializer())
-	W2 = tf.get_variable("weight2", shape=c2_shape, initializer=tf.contrib.layers.xavier_initializer())
-	W3 = tf.get_variable("weight3", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
-	W4 = tf.get_variable("weight4", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
-	B1 = tf.get_variable("bias1", shape=[c1_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
-	B2 = tf.get_variable("bias2", shape=[c2_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
-	B3 = tf.get_variable("bias3", shape=[FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
-	B4 = tf.get_variable("bias4", shape=[ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	W1 = tf.get_variable("weight1", shape=c1_shape, initializer=tf.truncated_normal_initializer(0.0,STD))
+	W2 = tf.get_variable("weight2", shape=c2_shape, initializer=tf.truncated_normal_initializer(0.0,STD))
+	W3 = tf.get_variable("weight3", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+	W4 = tf.get_variable("weight4", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B1 = tf.get_variable("bias1", shape=[c1_shape[-1]], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B2 = tf.get_variable("bias2", shape=[c2_shape[-1]], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B3 = tf.get_variable("bias3", shape=[FC_OUT_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B4 = tf.get_variable("bias4", shape=[ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
 
 	#q_s1a1 network variables
-	W5 = tf.get_variable("weight5", shape=c1_shape, initializer=tf.contrib.layers.xavier_initializer())
-	W6 = tf.get_variable("weight6", shape=c2_shape, initializer=tf.contrib.layers.xavier_initializer())
-	W7 = tf.get_variable("weight7", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
-	W8 = tf.get_variable("weight8", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
-	B5 = tf.get_variable("bias5", shape=[c1_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
-	B6 = tf.get_variable("bias6", shape=[c2_shape[-1]], initializer=tf.contrib.layers.xavier_initializer())
-	B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.contrib.layers.xavier_initializer())
-	B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.contrib.layers.xavier_initializer())
+	W5 = tf.get_variable("weight5", shape=c1_shape, initializer=tf.truncated_normal_initializer(0.0,STD))
+	W6 = tf.get_variable("weight6", shape=c2_shape, initializer=tf.truncated_normal_initializer(0.0,STD))
+	W7 = tf.get_variable("weight7", shape=[FC_IN_DIM, FC_OUT_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+	W8 = tf.get_variable("weight8", shape=[FC_OUT_DIM, ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B5 = tf.get_variable("bias5", shape=[c1_shape[-1]], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B6 = tf.get_variable("bias6", shape=[c2_shape[-1]], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
+	B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
 
 	#copy the network over, if it's time
 
