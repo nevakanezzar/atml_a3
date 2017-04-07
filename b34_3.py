@@ -53,8 +53,8 @@ elif GAME_INDEX == 2:
 game = GAMES[GAME_INDEX]
 env = gym.make(game)
 STATE_DIM = [210,160,3]
-STATE_X = 40 
-STATE_Y = 40
+STATE_X = 60 
+STATE_Y = 60
 SCALAR_DIM = 1
 ACTION_DIM = env.action_space.n
 print('Game : '+game)

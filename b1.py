@@ -34,6 +34,16 @@ if len(sys.argv) == 4:
 	np.random.seed(SEED) 
 	random.seed(SEED)
 
+#function that modifies the output (usually reward) as per directions
+def modify_outputs(obs, rew, ter, inf): 
+	if rew <= -1:
+		rew = -1
+	elif rew >= 1:
+		rew = 1
+	else:
+		rew = 0
+	not_ter = int((not ter) * 1.0)
+	return obs, int(rew), not_ter, inf
 
 #hyperparameters
 #NONE
@@ -67,7 +77,7 @@ def run():
 
 			e_a_t = np.random.choice(ACTION_DIM)	
 			e_s1_t, e_r_t, e_done, e_info = env.step(e_a_t)
-			
+			e_s1_t, e_r_t, e_not_done, e_info = modify_outputs(e_s1_t, e_r_t, e_done, e_info)
 			e_ep_t_rew += e_r_t
 			e_ep_d_rew += e_r_t * DISCOUNT**e_ep_steps
 			e_ep_steps += 1

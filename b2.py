@@ -209,7 +209,7 @@ def run():
 				qs = sess.run(q_out,feed_dict={s_in:[eS]})
 				e_a_t = np.argmax(qs)				
 				e_s1_t, e_r_t, e_done, e_info = env.step(e_a_t)
-				
+				e_s1_t, e_r_t, e_not_done, e_info = modify_outputs(e_s1_t, e_r_t, e_done, e_info)
 				e_ep_t_rew += e_r_t
 				e_ep_d_rew += e_r_t * DISCOUNT**e_ep_steps
 				e_ep_steps += 1
