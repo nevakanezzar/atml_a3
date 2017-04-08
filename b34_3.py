@@ -109,7 +109,7 @@ def preprocess_state(input_img):
 BUFFER_SIZE = 400000  #TO DO 100000
 MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
-STD = 0.001
+STD = 0.000001
 
 
 #file names
