@@ -1,11 +1,12 @@
 #Problem B, task 3 and 4
 import sys
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import gym
 import tensorflow as tf
 import random
 import time
+from copy import deepcopy
 from PIL import Image
 import select
 
@@ -20,6 +21,7 @@ except:
 
 #arguments
 # GAME_INDEX = 2
+DEBUG = False
 
 #constants
 GAMES = ['Pong-v3','MsPacman-v3','Boxing-v3']
@@ -91,7 +93,24 @@ def modify_outputs(obs, rew, ter, inf):
 #function to preprocess states into useable_states 
 def preprocess_state(input_img):
 	#creates a downsampled greyscale image
-	
+
+	# for i in range(3):
+	# 	plt.imshow(input_img[:,:,i])
+	# 	plt.show()
+	# 	plt.close()
+
+	if GAME_INDEX == 0:
+		in_img = np.ones(input_img.shape, dtype=np.uint8) * 255
+		in_img[input_img == 144] = 0
+		in_img[input_img == 72] = 0
+		in_img[input_img == 17] = 0
+		input_img = deepcopy(in_img)
+
+	# for i in range(3):
+	# 	plt.imshow(input_img[:,:,i])
+	# 	plt.show()
+	# 	plt.close()
+
 	img = Image.fromarray(input_img[X1:X2,Y1:Y2], 'RGB').convert('L')
 	img = img.resize((STATE_X, STATE_Y), Image.ANTIALIAS)
 	
@@ -109,7 +128,7 @@ def preprocess_state(input_img):
 BUFFER_SIZE = 400000  #TO DO 100000
 MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
-STD = 0.000001
+STD = 0.1
 
 
 #file names
@@ -278,8 +297,8 @@ def run():
 
 			ind_starts = np.random.choice(min(steps+1,BUFFER_SIZE)-FRAMES+1,MINI_BATCH_SIZE)
 			ind_ends = ind_starts + FRAMES
-			inds_S = [range(i,i+FRAMES) for i in ind_starts]
-			inds_S1 = [range(i+1,i+1+FRAMES) for i in ind_starts]
+			inds_S = [np.arange(i,i+FRAMES) for i in ind_starts]
+			inds_S1 = [np.arange(i+1,i+1+FRAMES) for i in ind_starts]
 
 			S_in = np.take(S,inds_S, axis=0)
 			A_in = np.take(A,ind_ends)
@@ -301,6 +320,37 @@ def run():
 									row_indices_in:np.arange(len(S_in)),
 									not_done_in:ND_in
 									})
+			
+
+			if DEBUG and steps==100:
+				[q,q2,t,b,l] = sess.run([q_out,q1_out,target, bellman_residual, loss], feed_dict={
+									s_in:S_in,
+									a_in:A_in,
+									r_in:R_in,
+									s1_in:S1_in,
+									discount_in:DISCOUNT,
+									row_indices_in:np.arange(len(S_in)),
+									not_done_in:ND_in
+									})
+				print(ind_starts, ind_ends, inds_S, inds_S1)
+				print(S_in, A_in,R_in,S1_in)
+				print(q,q.shape,q2,q2.shape,t,t.shape,b,b.shape,l,l.shape)
+				print("\n",np.sum(abs(S_in - S1_in)))
+				for i in range(3):
+					plt.imshow(s1_t[:,:,i])
+					plt.show()
+					plt.close()
+
+				for i in S_in:
+					for j in i:
+						plt.imshow(j)
+						plt.show()
+						plt.close()
+
+				sys.exit()
+
+
+
 			l1 += l2
 			bellman_l1 += np.mean(bellman_l2)
 
