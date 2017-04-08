@@ -106,7 +106,7 @@ def preprocess_state(input_img):
 
 #hyperparameters
 # LEARNING_RATE = 0.01
-BUFFER_SIZE = 100000  #TO DO 100000
+BUFFER_SIZE = 400000  #TO DO 100000
 MINI_BATCH_SIZE = 32
 LAMBDA = 0.0
 STD = 0.001
@@ -180,17 +180,6 @@ with tf.device('/gpu:0'):
 	B7 = tf.get_variable("bias7", shape=[FC_OUT_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
 	B8 = tf.get_variable("bias8", shape=[ACTION_DIM], initializer=tf.truncated_normal_initializer(0.0,STD))
 
-	#copy the network over, if it's time
-
-	a1 = W5.assign(W1)
-	a2 = W6.assign(W2)
-	a3 = W7.assign(W3)
-	a4 = W8.assign(W4)
-	a5 = B5.assign(B1)
-	a6 = B6.assign(B2)
-	a7 = B7.assign(B3)
-	a8 = B8.assign(B4)
-
 
 	#q_sa network 
 	conv1 = tf.nn.relu(tf.nn.conv2d(s_in1, W1, strides=[1,2,2,1], padding="SAME") + B1)
@@ -212,8 +201,18 @@ with tf.device('/gpu:0'):
 	thetas = [item for item in tf.trainable_variables()]
 	reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-	loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
-	train_op = tf.train.AdamOptimizer(LEARNING_RATE).minimize(loss)
+	loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) #+ tf.reduce_sum(reg_losses)
+	train_op = tf.train.RMSPropOptimizer(LEARNING_RATE).minimize(loss)
+
+	#copy the network over, if it's time
+	a1 = W5.assign(W1)
+	a2 = W6.assign(W2)
+	a3 = W7.assign(W3)
+	a4 = W8.assign(W4)
+	a5 = B5.assign(B1)
+	a6 = B6.assign(B2)
+	a7 = B7.assign(B3)
+	a8 = B8.assign(B4)
 
 
 def run():

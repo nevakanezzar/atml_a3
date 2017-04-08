@@ -1,3 +1,6 @@
-model_checkpoint_path: "b34_1_0.0001_0_17_05.model"
-all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model_1"
+model_checkpoint_path: "b34_1_0.0001_0_17_05.model_8"
+all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model_5"
 all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model"
+all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model_6"
+all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model_7"
+all_model_checkpoint_paths: "b34_1_0.0001_0_17_05.model_8"
