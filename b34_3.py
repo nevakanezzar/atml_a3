@@ -145,8 +145,8 @@ with tf.device('/gpu:0'):
 	s_in1 = tf.transpose(s_in, [0,2,3,1])
 	s1_in1 = tf.transpose(s1_in, [0,2,3,1])
 
-	c1_height = 8
-	c1_width = 8
+	c1_height = 6
+	c1_width = 6
 	c1_in_channels = FRAMES
 	c1_out_channels = 16
 	c1_shape = [c1_height, c1_width, c1_in_channels, c1_out_channels]
