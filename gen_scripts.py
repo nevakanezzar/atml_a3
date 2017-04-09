@@ -13,12 +13,13 @@ for g in games:
 					"#$ -l h_vmem=4G\n",
 					"#$ -l h_rt=36:00:00\n",
 					"#$ -S /bin/bash\n",
+					"#S -N "+g+l+d,
 					# "#$ -j y\n",
 					"#$ -wd /home/skasewa/git/atml_a3/\n",
 					# "#$ -pe smp 4\n",
 					"hostname\n",
 					"date\n",
-					"python3 ~/git/atml_a3/b34_2.py "+g+" "+l+" "+d+"\n"]
+					"python3 ~/git/atml_a3/b34_3.py "+g+" "+l+" "+d+"\n"]
 			with open(filename,'w') as f:
 				f.write("".join(text))	
 			files.append(filename)
