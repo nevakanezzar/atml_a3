@@ -161,8 +161,8 @@ with tf.device('/gpu:0'):
 	batch_size = tf.shape(s_in)[0]
 
 	#reshapes for conv net
-	s_in1 = tf.transpose(s_in, [0,2,3,1])
-	s1_in1 = tf.transpose(s1_in, [0,2,3,1])
+	s_in1 = tf.transpose(s_in, [0,3,2,1])
+	s1_in1 = tf.transpose(s1_in, [0,3,2,1])
 
 	c1_height = 6
 	c1_width = 6
@@ -209,7 +209,7 @@ with tf.device('/gpu:0'):
 	#q_s1a1 network 
 	conv2 = tf.nn.relu(tf.nn.conv2d(s1_in1, W5, strides=[1,2,2,1], padding="SAME") + B5)
 	conv2 = tf.nn.relu(tf.nn.conv2d(conv2,  W6, strides=[1,2,2,1], padding="SAME") + B6)
-	conv2 = tf.nn.relu(tf.matmul(tf.reshape(conv1, [batch_size,-1]), W7) + B7)
+	conv2 = tf.nn.relu(tf.matmul(tf.reshape(conv2, [batch_size,-1]), W7) + B7)
 	q1_out = tf.matmul(conv1,W8) + B8
 
 
