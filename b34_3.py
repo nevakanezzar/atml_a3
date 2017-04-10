@@ -210,7 +210,7 @@ with tf.device('/gpu:0'):
 	conv2 = tf.nn.relu(tf.nn.conv2d(s1_in1, W5, strides=[1,2,2,1], padding="SAME") + B5)
 	conv2 = tf.nn.relu(tf.nn.conv2d(conv2,  W6, strides=[1,2,2,1], padding="SAME") + B6)
 	conv2 = tf.nn.relu(tf.matmul(tf.reshape(conv2, [batch_size,-1]), W7) + B7)
-	q1_out = tf.matmul(conv1,W8) + B8
+	q1_out = tf.matmul(conv2,W8) + B8
 
 
 	target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1))
