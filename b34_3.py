@@ -296,7 +296,7 @@ def run():
 			ND[steps%BUFFER_SIZE] = not_done
 
 			ind_starts = np.random.choice(min(steps+1,BUFFER_SIZE)-FRAMES+1,MINI_BATCH_SIZE)
-			ind_ends = ind_starts + FRAMES
+			ind_ends = ind_starts + FRAMES - 1
 			inds_S = [np.arange(i,i+FRAMES) for i in ind_starts]
 			inds_S1 = [np.arange(i+1,i+1+FRAMES) for i in ind_starts]
 
