@@ -13,7 +13,6 @@ for g in games:
 					"#$ -l h_vmem=4G\n",
 					"#$ -l h_rt=36:00:00\n",
 					"#$ -S /bin/bash\n",
-					"#S -N "+g+l+d,
 					# "#$ -j y\n",
 					"#$ -wd /home/skasewa/git/atml_a3/\n",
 					# "#$ -pe smp 4\n",
