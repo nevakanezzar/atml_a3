@@ -20,6 +20,7 @@
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{float}
  
 % user defined commands
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
@@ -239,6 +240,9 @@ Mean and stddev. of episode rewards: -0.805817253927 \quad\quad\quad 0.083643535
 
 It is clear from these results that the second run in section 1.1 of 54 timesteps is an outlier over 3-sigma away from the mean.\\
 
+\textit{For the remaining sections of Problem A we present plots of training losses and test performance. All plots follow the same structure. Each plot has 4 graphs, each of which has training time measured either in episodes or epochs running along the x-axis. The graphs themselves are, starting from the top left and going clock-wise: i) $0.5 \times \delta^2$, labelled Bellman Loss, averaged over all the training in an epoch or episode, as per context; ii) the Average distance from target, or $\delta$, averaged over all the training in an epoch or episode, as per context; iii) Average moves, which is the average test performance of an agent over 10 trials unless otherwise specified, measured in number of moves before the pole topples over; and 4) Discounted rewards, which is the average of discounted rewards of the test trials mentioned previously.\\
+Models were saved at their best performance test performance, measured in average discounted reward.}
+\newpage
 \subsection{Batch Q-learning}
 
 The version of batch Q-learning we implemented is similar to that as described in Chapter 2 of "Reinforcement Learning: State-of-the-Art.", edited by Wiering, Marco, y Martijn van Otterlo \footnote{\url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.229.787&rep=rep1&type=pdf}}, as the algorithm 'fitted-Q-iteration'.\\
@@ -248,50 +252,236 @@ In these experiments, we used learning rates of $[10^{-5},10^{-4},10^{-3},10^{-2
 \subsubsection{Linear transform}
 
 The linear transform did not include any bias. Results are given below. Evaluation was over 10 episodes after every epoch of training.
+%a3a
+
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3a_0.00001}.png}
+	\end{center}
+    \caption{%
+		Batch Q-learning with a linear transform $x \cdot W$. Learning rate = 0.00001.
+     }%
+\end{figure}
+
+\begin{figure}[H]
+    \caption{%
+		Batch Q-learning with a linear transform $x \cdot W$. Learning rate = 0.0001.
+     }%
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3a_0.0001}.png}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3a_0.001}.png}
+	\end{center}
+    \caption{%
+		Batch Q-learning with a linear transform $x \cdot W$. Learning rate = 0.001.
+     }%
+\end{figure}
+
+\begin{figure}[H]
+    \caption{%
+		Batch Q-learning with a linear transform $x \cdot W$. Learning rate = 0.01.
+     }%
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3a_0.01}.png}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3a_0.1}.png}
+	\end{center}
+    \caption{%
+		Batch Q-learning with a linear transform $x \cdot W$. Learning rate = 0.1.
+     }%
+\end{figure}
+
+\begin{figure}[H]
+    \caption{%
+		Batch Q-learning with a linear transform $x \cdot W$. Learning rate = 0.5.
+     }%
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3a_0.5}.png}
+	\end{center}
+\end{figure}
+
 
 \subsubsection{Hidden layer with 100 units, followed by ReLU}
 
 The single-layer neural network did not include any biases. Experimentally, biases proved to be much harder to train, and so were dropped from further experiments. All further experiments in part A do not have biases. Evaluation was over 10 episodes after every epoch of training.
 
+% a3b
+
+\begin{figure}[H]
+    \caption{%
+		Batch Q-learning with neural network with one hidden layer of 100 units. Learning rate = 0.00001.
+     }%
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3b_0.00001}.png}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3b_0.0001}.png}
+	\end{center}
+    \caption{%
+		Batch Q-learning with neural network with one hidden layer of 100 units. Learning rate = 0.0001.
+     }%
+\end{figure}
+
+\begin{figure}[H]
+    \caption{%
+		Batch Q-learning with neural network with one hidden layer of 100 units. Learning rate = 0.001.
+     }%
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3b_0.001}.png}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3b_0.01}.png}
+	\end{center}
+    \caption{%
+		Batch Q-learning with neural network with one hidden layer of 100 units. Learning rate = 0.01.
+     }%
+\end{figure}
+
+\begin{figure}[H]
+    \caption{%
+		Batch Q-learning with neural network with one hidden layer of 100 units. Learning rate = 0.1.
+     }%
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3b_0.1}.png}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=8cm]{{figures/a3b_0.5}.png}
+	\end{center}
+    \caption{%
+		Batch Q-learning with neural network with one hidden layer of 100 units. Learning rate = 0.5.
+     }%
+\end{figure}
+
+
 \subsection{Online Q-learning}
 
 The online Q-learning experiment was run 100 times with the following parameters: Learning rate: 0.01. A graph of the average reward and standard deviation is given below.
 
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/a4_0.01}.png}
+	\end{center}
+    \caption{%
+		Online Q-learning with neural network with one hidden layer of 100 units, run 100 times. Dark blue line is average over these 100 trials. Light blue area is +/- 1 standard deviation. Learning rate = 0.01.
+     }%
+\end{figure}
+
+We can see the typical test performance of this agent is about 200 moves, after it has been training on using an $\epsilon$-greedy ($\epsilon=0.05$) policy for approximately 1000 episodes. Also, since we can see that +1 standard deviation is almost 300 moves, it can be noted that at many points during these experiments, the agent actually succeeded at balancing the pole for 300 moves, particularly after being trained over 1000 episodes. The variance, however, is quite high, and a few times the agent even oscillated between 300 and 9 (not present in figures).
+
+\newpage
 \subsection{Changing the hidden layer}
 We modified the above agent and ran the experiment one time each to observe any change in behaviour. The learning rate was 0.01.
 
 \subsubsection{Fewer units (30)}
 Given below is a graph using a hidden layer of 30 units.
 
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/a5_30_0.01}.png}
+	\end{center}
+    \caption{%
+		Online Q-learning with neural network with one hidden layer of 30 units. Learning rate = 0.01. Points are plotted every 20 episodes.
+     }%
+\end{figure}
 
+Compared to the previous chart, it appears that this network fares worse. The average number of moves at test time appears to be around 100, even after 2000 episodes of training. However, one trial is not conclusive evidence that this network is unable to solve the problem, even through it is quantitatively less expressive than the network in section 1.4.
+\newpage
 \subsubsection{More units (1000)}
 Given below is a graph using a hidden layer of 1000 units.
 
+\begin{figure}[H]
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/a5_1000_0.01}.png}
+	\end{center}
+    \caption{%
+		Online Q-learning with neural network with one hidden layer of 1000 units. Learning rate = 0.01. Points are plotted every 20 episodes.
+     }%
+\end{figure}
 
+Compared to the chart in section 1.4, it appears that this network performs a little better. It is able to solve the problem consistently for about 100 episodes from episodes \textasciitilde 650 and \textasciitilde 750. It also returns to this peak a few times during the whole trial. Again, one trial is not conclusive evidence that this network is better able to solve the problem, even through it is quantitatively more expressive than the network in section 1.4. We can also see from this graph that the learning of this algorithm can be unstable. This is possibly because of the learning rate being held at 0.01 as in the previous experiments. The output layer can now have potentially 10x the magnitude when compared to the network in 1.4, and this might be a source of unwanted, unstable agent behaviour. This would explain the unusual Bellman loss curve as well.
+
+\newpage
 \subsection{Adding experiece replay}
-Given below is a graph of the behaviour of an agent from Q4 augmented with an experience replay buffer of size 8000. The learning rate is 0.01.
+Given below is a graph of the behaviour of an agent from Q4 augmented with an experience replay buffer of size 10000. The learning rate is 0.01. Mini-batch size was set to 512. The experience replay buffer size was obtained through an exhaustive search over the values \{$n \times 2000 : 0 < n < 8$\}.
 
+\begin{figure}[H]
+    \caption{%
+		Online Q-learning with an experience replay buffer of 10000. Learning rate = 0.01. Points are plotted every 20 episodes.
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/a6_0.01_10000}.png}
+	\end{center}
+\end{figure}
+
+From the graph it is clear that experience replay significantly helps the learning process. The agent is able to successfully balance the poll for nearly one-fourth of the episodes. However, the agent can still un-learn, as it does almost catastrophically shortly after 1500 episodes.
+\newpage
 \subsection{Adding a target network}
 The last agent was modified to include a target network, which was updated to the current network every 5 episodes. The learning rate used is 0.01. Its behaviour is graphed below.
 
+\begin{figure}[H]
+    \caption{%
+		Online Q-learning with an experience replay buffer of 10000 and a target network being updated every 5 episodes. Learning rate = 0.01. Points are plotted every 20 episodes.
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/a7_0.01_10000}.png}
+	\end{center}
+\end{figure}
 
+Two key differences between this graph and the one from section 1.6 are 1) This agent learns a little slower, however, 2) it doesn't forget catastrophically, and does not drop far away the peaks it reaches. The loss curves also look less jagged than those in section 1.6.
+
+\newpage
 \subsection{Implementing a SARSA agent}
 We started with the agent from Q4 and modified it to learn as per the SARSA algorithm. The learning rate used is 0.01. Its behaviour is graphed below.
 
+\begin{figure}[H]
+    \caption{%
+		SARSA learning agent. Learning rate = 0.01. Points are plotted every 20 episodes.
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/a8_0.01}.png}
+	\end{center}
+\end{figure}
 
+In comparison to 1.4, 1.5, 1.6 and 1.7, this SARSA agent seems to perform the best, with the one flaw that it also regularly catastrophically forgets after demonstrating strong performance for 50 to 100 episodes at a time. In this trial, after 1500 epsiodes it falls into a zone of sub-optimal performance, perhaps due to a high learning rate.\\
+
+Additional trials of this experiment(not graphed) showed similar strong performance with periodic forgetfulness on the part of the agent. 
+
+\newpage
 \section{Problem B: Atari Games}
 For these problems, the following specifications for the world state were implemented.
 \begin{itemize}
-\item Observations were preprocessed from $210 \times 160 \times 3$ to $28 \times 28 \times 1$
+\item Observations were preprocessed from $210 \times 160 \times 3$ to either $60 \times 60 \times 1$, $40 \times 40 \times 1$, or $28 \times 28 \times 1$
 \item Rewards were clipped to -1, 0 or 1
+\item For the game \texttt{Pong}, images were thresholded to black and white before shrinking
+\item Images were clipped to the dynamic areas of the screen
 \end{itemize}
 Further, the following features were implemented.
 \begin{itemize}
-\item An empty experience buffer of 100,000 transitions was created.
-\item The Q function was approximated using a two-stage convolutional neural network.
-\item A batch Q-learning agent was implemented, using mini-batch sizes of 32.
-\item RMSPropOptimizer was used for training the agent.
-\item Performance of the agent was evaluated every 50,000 steps with a hundred runs of a greedy policy.
+\item Where possible, the agents were trained to 2,000,000 steps
+\item An empty experience buffer of 400,000 transitions was created
+\item The Q function was approximated using a two-stage convolutional neural network
+\item Mini-batch sizes of 32 were used during training
+\item RMSPropOptimizer was used for training the agent
+\item Learning rates in \{0.00001, 0.0001, 0.001, 0.01, 0.1\} were tried
+\item Performance of the agent was evaluated every 50,000 steps
+\item Experiments were run with 1) an $\epsilon$ of 0.1 and 2) a decaying $\epsilon$ from 1 to 0.1 over the the first 500,000 steps.
 \end{itemize}
 
 \subsection{Random policy}
@@ -342,8 +532,8 @@ Game : MsPacman-v3 \newline
 Possible actions : 9 \newline
 Evaluation over 100 episodes \newline
 Avg steps: 458.0 \quad\quad\quad\quad\quad\quad\quad\quad\quad Standard deviation: 5.06557005677 \newline
-Avg tot rew: 60.0 \quad\quad\quad\quad\quad\quad\quad\quad\quad Standard deviation: 0.0 \newline
-Avg disc rew: 21.784172183 \quad\quad\quad\quad Standard deviation: 0.544610419163 \newline
+Avg tot rew: 6.0 \quad\quad\quad\quad\quad\quad\quad\quad\quad Standard deviation: 0.0 \newline
+Avg disc rew: 2.1784172183 \quad\quad\quad\quad Standard deviation: 0.0544610419163 \newline
 }
 
 \texttt{
@@ -355,451 +545,101 @@ Avg tot rew: -25.0 \quad\quad\quad\quad\quad\quad\quad\quad Standard deviation: 
 Avg disc rew: -0.373366658935 \quad\quad\quad Standard deviation: 0.0166110046567 \newline
 }
 
-As we can see, the performance of this agent is different from the agent under a random policy from Q1. Our first observation is that the standard deviation for total reward is always 0. This implies that the untrained Q-learning agent takes the same actions every single time regardless of stochasticity in the environment and the inputs. This is expected because the untrained agent would most likely have weights that cannot give meaningful Q values; it would most likely have Q values that are so far away from each other, that their order from max to min is not affected by input state, and hence would take the same actions every time for any input state. Secondly, the untrained agent seems to perform worse than the random agent. This is because the random agent on average takes several different moves, allowing it to turn down corners in Ms Pacman, or occasionally return the ball and score in Pong, which our Q-learning agent does not do.\\
+As we can see, the performance of this agent is different from the agent under a random policy from Q1. Our first observation is that the standard deviation for total reward is always 0. This implies that the untrained Q-learning agent takes the same actions every single time regardless of stochasticity in the environment and the inputs. This is expected because the untrained agent would most likely have weights that cannot give meaningful Q values; it is therefore possible that the Q values are so far away from each other, that their order from maximum to minimum is not affected by small changes in input state, and hence would take the same actions every time in similar states. Secondly, the untrained agent seems to perform worse than the random agent. This is because the random agent on average takes several different moves, allowing it to turn down corners in Ms Pacman, or occasionally return the ball and score in Pong, which our untrained Q-learning agent does not do.\\
 
+\subsection{Training agents to play Atari games}
 
-The linear transform did not include any bias. Results are given below.
+Presented below are graphs of Bellman loss = $0.5 \times \delta^2$, as well as averaged $\delta$ over the length of an episode, for each episode during training, for three Atari games.
 
+\subsubsection{Pong}
+After hyperparameter optimisation using grid-search, the best performing agent was selected. The image was downsampled to $60 \times 60 \times 1$; the learning rate chosen was 0.00001; $\epsilon$ was decayed from 1 to 0.1 over the first 500,000 episodes. The agent was trained for 2,000,000 steps.
 
+\begin{figure}[H]
+    \caption{%
+		Bellman loss and distance from target for agent while learing to play Pong
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/b34_0_0.00001_0_train}.png}
+	\end{center}
+\end{figure}
 
-We first examine the functionality of LSTMs and GRUs, and answer three key questions.
+The Bellman Loss resembles a supervised learning curve closely. The Average distance from target curve dips for the first 200 episodes; we think this is because during this time, the algorithm is learning from experience drawn from a largely random policy, while $\epsilon$ decay from 1 to 0.1 over the first 500,000 steps.
 
-For reference, we provide all the equations required for updating LSTMs:
+\subsubsection{Ms Pacman}
+After hyperparameter optimisation using grid-search, the best performing agent was selected. The image was downsampled to $60 \times 60 \times 1$; the learning rate chosen was 0.00001; $\epsilon$ was set to 0.1 throughout training. The agent was trained for 1,000,000 steps.
 
-\begin{align}
-i_t & = W_{ix}x_t + W_{ih}h_{t-1} + b_i\\
-j_t & = W_{jx}x_t + W_{jh}h_{t-1} + b_j\\
-f_t & = W_{fx}x_t + W_{fh}h_{t-1} + b_f\\
-o_t & = W_{ox}x_t + W_{oh}h_{t-1} + b_o\\
-\nonumber \\ 
-c_t & = \sigma (f_t) \odot c_{t-1} + \sigma (i_t) \odot	 tanh(j_t)\\
-h_t & = \sigma (o_t) \odot tanh(c_t)
-\end{align}
+\begin{figure}[H]
+    \caption{%
+		Bellman loss and distance from target for agent while learing to play Ms Pacman
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/b34_1_0.00001_500000_train}.png}
+	\end{center}
+\end{figure}
 
-Following are the equations for GRUs:
+This curve closely resembles a supervised learning curve. The loss does not strictly reduce from one step to the next, for perhaps a few reasons: 1) When using neural networks, this behaviour is not guaranteed, and 2) the loss is being calculated against some sample of the experience, which might have never been seen before, and hence cause the algorithm to predict incorrectly and result in a high loss.
 
-\begin{align}
-f_t & = W_{fx}x_t + W_{fh}h_{t-1} + b_f\\
-i_t & = W_{ix}x_t + W_{ih}h_{t-1} + b_i\\
-\nonumber \\
-z_t & = \sigma (f_t)\\
-r_t & = \sigma (i_t)\\
-\nonumber \\ 
-h & = tanh(W_{hx}x_t + W_{hh}(r_t \odot h_{t-1}) + b_h)\\
-h_t & = (1-z_t) \odot h + z_t \odot h_{t-1}
-\end{align}
+\subsubsection{Boxing}
+After hyperparameter optimisation using grid-search, the best performing agent was selected. The image was downsampled to $40 \times 40 \times 1$; the learning rate chosen was 0.0001; $\epsilon$ was set to 0.1 throughout training. The agent was trained for 1,000,000 steps.
 
-\subsection{Can they store the current input?}
+\begin{figure}[H]
+    \caption{%
+		Bellman loss and distance from target for agent while learing to play Boxing
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/b34_2_0.0001_0_train}.png}
+	\end{center}
+\end{figure}
 
+This graph is significantly different from other graphs. It might be that the learning rate was too high for this particular experiment.\\
 
-\subsubsection{LSTM}
+Finally, reinforcement learning loss curves can be different from supervised learning loss curves because the algorithms are fundamentally updating towards different values. Supervised learning algorithms update toward the 'true' or 'gold' value, while most reinforcement learning algorithms (ones that do not sample to the of an episode) are updating toward some \textit{approximation} of the final result. This approximation may be biased in some way: for example, Q-learning overestimates the q-values of a Markov Decision Process. If the approximation is poor (due to the current initialisations, or the current target values, or poor recent experience) it can be source of noise causing the loss curve to look strange.
 
-In order for an LSTM to store the current inputs $x_t$ for the next time-step, we would want to find weights $W$ and biases $b$ such that $c_t = x_t$. From equation 1.5 we can see that for $c_t = x_t$ we need to have the first part of the RHS equal zero, and the second part equal $x_t$. We can have $\sigma (f_t) \odot c_{t-1} = 0$ for highly negative values of $b_f$. However, since the remaining term $\sigma (i_t) \odot	 tanh(j_t)$ is a combination of $\sigma$ and $tanh$ operators, it is bounded in the region (-1,1) and inasmuch can never equal $x_t$ that lies outside this region.\\
+\subsection{Testing the Atari agents}
 
+Presented below are graphs of Average moves and Discounted Reward over multiple evaluation trials, plotted every 50,000 steps during training. 
 
-Therefore, the value of $x_t$ cannot be stored identically in the cell memory $c_t$. By the same token, we cannot have $h_t = x_t$ because $h_t$ is bounded by (-1,1).\\
+\subsubsection{Pong}
+We can see the average length of the episode during evalution increases with more training. Also, the discounted rewards trend upward, in spite of having high variance. Our final Pong agent achieves an average discounted reward of -0.4422 over a hundred trials.
 
+\begin{figure}[H]
+    \caption{%
+		Average episode length and discounted rewards at evaluations every 50,000 steps while learning Pong.
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/b34_0_0.00001_0_test}.png}
+	\end{center}
+\end{figure}
 
-However, the cell memory $c_t$ can store a \textbf{representation} of $x_t$ that is unique to $x_t$. In particular, if we have all the $W_{\cdot h}$ weights equal 0, all the $W_{\cdot x}$ weights equal 1, and all the biases equal 0, except for a high negative value for $b_f$, then $c_t$ reduces to a function of $x_t$.
+The Pong agent attempts to hit the ball almost every time. It often manages to score two to four points against the opponent.
 
+\subsubsection{Ms Pacman}
+Again, we can see the average length of the episode during evalution increases with more training. Also, the discounted rewards trend upward, in spite of having high variance; however, this is lower than that for Pong. Our final Ms Pacman agent achieves an average discounted reward of 5.0694 over a hundred trials.
 
+\begin{figure}[H]
+    \caption{%
+		Average episode length and discounted rewards at evaluations every 50,000 steps while learning Ms Pacman.
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/b34_1_0.00001_500000_test}.png}
+	\end{center}
+\end{figure}
 
-\subsubsection{GRU}
+The Ms Pacman agent runs around the maze in different patterns each time. It rarely if ever stops moving; however, it does not seem to be interested in eating pellets all the time.
 
+\subsubsection{Boxing}
+The length of an episode is fixed in this game. Also, the discounted reward does not seem to follow a learning trend; however, among all the agents, this one was the only one able to consistently perform better than random. Our final Boxing agent achieves an average discounted reward of 0.7436 over a hundred trials.
 
-The question asks whether the state of the GRU $h_t$ can store the value of the input. Using the same logic as above, we try and get rid of the $h_{t-1}$ term from the RHS of equation 1.12 by setting $b_f$ to have a high negative value, so that $z_t$ tends to 0. However, we run into the same problem again, since now $h_t$ is simply the evalution of a $tanh$ function, and is therefore not able to take on any values outside the bound (-1,1), and in particular, cannot identically ever be equal to any $x$ outside this bound.\\
+\begin{figure}[H]
+    \caption{%
+		Average episode length and discounted rewards at evaluations every 50,000 steps while learning Boxing.
+     }%
+	\begin{center}
+     	\includegraphics[height=10cm]{{figures/b34_2_0.0001_0_test}.png}
+	\end{center}
+\end{figure}
 
-We can have a representation of $x_t$ in the hidden state, by setting $W_{hh} = 0$ and $b_h = 0$, and having $z_t$ tend to zero, as before.\\
-
-\newpage
-
-\subsection{Can they ignore the current input?}
-
-\subsubsection{LSTM}
-
-For an LSTM's states $c_{t-1}$ and $h_{t-1}$ to persist to the next time state, we would need to negate the effect of the input $x_t$ entirely. This is possible in an LSTM cell if input gate $\sigma (i_t) = 0$, the forget gate  $\sigma (f_t) = 1$, and the output gate does not change from time $t-1$ to time $t$, i.e. $\sigma (o_t) = \sigma (o_{t-1})$. In this situation, equations 1.5 and 1.6 become:
-
-\begin{align}
-c_t & = \sigma (f_t) \odot c_{t-1} + \sigma (i_t) \odot	 tanh(j_t) = 1 \odot c_{t-1} + 0 \odot tanh(j_t) = c_{t-1}\\
-h_t & = \sigma (o_t) \odot tanh(c_t) = \sigma (o_{t-1}) \odot tanh(c_{t-1}) = h_{t-1}
-\end{align}
-
-The output gate condition can be realised by setting $b_o$ to be a large positive value.
-
-
-\subsubsection{GRU}
-
-For a GRU to preserve its hidden state $h_{t-1}$ in the next time step, we would need to have $z_t = 1$ in equation 1.12. $z_t$ is the GRU's forget gate, and $z_t = 1$ can be realised if $b_f$ has a very high positive value. $$b_f \gg 0 \Rightarrow \sigma (f_t) = 1 = z_t$$  And thus, equation 1.12 becomes :
-\[
-h_t = (1-z_t) \odot h + z_t \odot h_{t-1} = (1-1) \odot h + 1 \odot h_{t-1} = h_{t-1}
-\]
-
-\subsection{Are GRUs a special case of LSTMs?}
-
-We interpreted this question to mean whether or not any arbitrary input-output pair that can be learned by a GRU can be learned by an LSTM. If any arbitary input-output pair that can be computed by an GRU can also be computed by an LSTM with suitable weights, then GRUs might be a special case of LSTMs, and further exploration would be required to prove this. However, if there is some input-output pair which can be computed by a GRU which cannot be computed by an LSTM then the question of whether it is a special case is moot.\\
-
-The inputs are clearly in the form $x_t$. For clarity of notation, we consider the output of the LSTM to be equation 1.6, $h_t = h_{t,LSTM}$, and for GRUs to be equantion 1.12, $h_t = h_{t,GRU}$.\\
-
-We propose that the GRU is not a special case of the LSTM. Specifically, we can have the GRU output arbitrarily large values as $h_{t,GRU}$, by selecting the initial state $h_{0,GRU} = k$, and then setting $z_t = 1 \forall t$, persisting this internal state, which is also the output of the GRU.\\
-
-On the other hand, the output for LSTMs $h_t = h_{t,LSTM}$ is always bounded by (-1, 1) as evidenced from equation 1.6, since the expression $h_t = \sigma (o_t) \odot tanh(c_t)$ is the product of two bounded operators and is therefore bounded by (-1, 1). This bound cannot be breached, regardless of the settings of the weights, biases, or the initial values for the hidden state and the memory of the LSTM.\\
-
-Specifically, consider any input-output pair $(x, 2)$. Then we can set $h_{0,GRU} = 2$, and choose weights and biases for equation 1.7 such that $z_t = 1$. Therefore, the output of the GRU at any time is $h_{t,GRU} = 2$. However, under no circumstances can $ h_{t,LSTM} = 2$ because $ h_{t,LSTM}$ is bounded by (-1, 1).
-
-\section{Task 1: Classification}
-
-We explored the effectiveness of LSTMs and GRUs learning a probability distribution over the digits given the (sequential) input of the image pixels. \\
-
-We present the results of our experiments below.
-
-\begin{center}
-\begin{tabular}{ |l|r|r|r|r| }
-\hline
-Model: LSTM & (1 layer, 32 units) & (1 layer, 64 units) & (1 layer, 128 units) & (3 layer, 32 units) \\
-\hline
-Testing Loss & 0.5920 & 0.4936 & 0.2344 & 0.5636 \\
-Training Loss & 0.6035 & 0.5170 & 0.2326 & 0.6556 \\
-\hline
-Testing Accuracy & 79.78\% & 81.55\% & 93.32\% & 79.35\% \\
-Training Accuracy & 79.35\% & 82.18\% & 93.30\% & 76.72\% \\
-\hline
-\end{tabular}
-\end{center}
-
-\begin{center}
-\begin{tabular}{ |l|r|r|r|r| }
-\hline
-Model: GRU & (1 layer, 32 units) & (1 layer, 64 units) & (1 layer, 128 units) & (3 layer, 32 units) \\
-\hline
-Testing Loss & 0.2463 & 0.0824 & 0.0616 & 0.1505 \\
-Training Loss &  0.2454 & 0.0692 & 0.0482 & 0.2015 \\
-\hline
-Testing Accuracy & 92.47\% & 97.70\% & 98.27\% & 95.30\% \\
-Training Accuracy & 92.36\% & 97.82\% & 98.50\% & 93.44\% \\
-\hline
-\end{tabular}
-\end{center}
-
-
-For comparison, the loss reported is averaged over number of instances. Thus, the total loss can be computed by multiplying by 55,000 for the training loss, and multiplying by 10,000 for the test loss.\\
-
-\textbf{Comparison among these models:} \\
-Our first observation is that GRUs tend to outperform LSTMs consistently. Not only to do they achieve higher test accuracy than their equivalent LSTM architectures, the weakest GRU model (single layer, size 32) performed just under the best LSTM model (single layer, size 128). GRUs generally trained faster per epoch, improved in accuracy faster, and were more robust to changes in hyperparameters.\\
-
-Secondly, the best performers in both categories for this task were the single layer, size 128 models.\\
-
-Thirdly, the stacked variants before better than their single layer cousins, but not by much.\\
-
-\textbf{Comparison with feedforward and convolutional models:} \\
-It is clear that while some models to achieve high testing accuracy, these models are in general inferior to the regular networks or convolutional networks explored in earlier experiments. 'Seeing' the entire image at once certainly grants those models an edge over our pixel-by-pixel many-to-one classifiers. This is probably because the LSTM and GRU cells need to learn long-term dependencies, which can be difficult; in any case, these networks certainly require more time and training in order to achieve even comparable results. It should be noted that some GRU models did train to very high test accuracy, which are better than the simpler feedforward models from the previous experiments.\\
-
-\textbf{Hyperparameter tuning:} We identified the following five hyperparameters to be tuned. We also described how they were tuned.
-\begin{itemize}
-  \item Optimisation algorithm, among SGD, Adagrad, Adadelta, and Adam: Using the simplest network, we ran trials up to 10 epochs using these optimisers with learning rates $\in {0.1, 0.01, 0.001, 0.0001}$. We selected the best performing optimiser under this setup (Adam) and used it for all further experiments. With a learning rate of 0.0001 Adam steadily learned to an accuracy of ~40\% on the test set within 10 epochs. Other optimisers and learning rates did not fair as well, often not achieving test accuracy over 30\%, and sometimes not learning at all within 10 epochs, e.g. SGD with a learning rate of 0.1.
-  \item Learning rate: After selecting Adam as an optimizer, learning rate was tweaked for each model in the range 0.0001 to 0.001 in increments of 0.0001 till it appeared that the model would successfully learn. For many models, this meant that 0.0001 sufficed; some models learned at 0.0002. LSTM with a hidden size of 32 was trained with a learning rate of 0.0005.
-  \item Batch size: This parameter was increased to the degree allowed by memory, to enable faster training. Its impact on training accuracy was not recorded.
-  \item Dropout percentage (for stacked networks only): This parameter was not tuned, owing to time constraints. For the stacked models we have used an \texttt{input\_keep\_prob=0.75} while training, although we did not validate it against a null hypothesis.
-  \item Gradient clip value: In all experiments, gradients were clippped at -1 and 1 to avoid the exploding gradient problem and large jumps across the loss function surface.
-\end{itemize}
-
-%
-%A similar approach to hyperparameter optimisation was adopted for task 2, and hence is not explained again.
-%\newpage
-%\begin{figure}[htb!]
-%     \begin{center}
-%%
-%        \subfigure[1 layer, 32 units]{%
-%            \label{fig:first}
-%            \includegraphics[width=0.5\textwidth]{figures/Simple_LSTM_32.png}
-%        }%
-%        \subfigure[1 layer, 64 units]{%
-%           \label{fig:second}
-%           \includegraphics[width=0.5\textwidth]{figures/Simple_LSTM_64.png}
-%        }\\ %  ------- End of the first row ----------------------%
-%        \subfigure[1 layer, 128 units]{%
-%            \label{fig:third}
-%            \includegraphics[width=0.5\textwidth]{figures/Simple_LSTM_128.png}
-%        }%
-%        \subfigure[3 layer, 32 units]{%
-%            \label{fig:fourth}
-%            \includegraphics[width=0.5\textwidth]{figures/Layered_LSTM_32.png}
-%        }%
-%%
-%    \end{center}
-%    \caption{%
-%		Learning curves and losses over during training for LSTMs
-%     }%
-%\end{figure}
-%\newpage
-%\begin{figure}[htb!]
-%     \begin{center}
-%%
-%        \subfigure[1 layer, 32 units]{%
-%            \label{fig:first}
-%            \includegraphics[width=0.5\textwidth]{figures/Simple_GRU_32.png}
-%        }%
-%        \subfigure[1 layer, 64 units]{%
-%           \label{fig:second}
-%           \includegraphics[width=0.5\textwidth]{figures/Simple_GRU_64.png}
-%        }\\ %  ------- End of the first row ----------------------%
-%        \subfigure[1 layer, 128 units]{%
-%            \label{fig:third}
-%            \includegraphics[width=0.5\textwidth]{figures/Simple_GRU_128.png}
-%        }%
-%        \subfigure[3 layer, 32 units]{%
-%            \label{fig:fourth}
-%            \includegraphics[width=0.5\textwidth]{figures/Layered_GRU_32.png}
-%        }%
-%%
-%    \end{center}
-%    \caption{%
-%		Learning curves and losses over during training for GRUs
-%     }%
-%\end{figure}
-%
-%\newpage
-%\section{Task 2: Pixel prediction}
-%
-%\textbf{(a)} We first report the mean cross-entropy of the trained models:
-%
-%\begin{center}
-%\begin{tabular}{ |l|r|r|r|r| }
-%\hline
-%Model: GRU & (1 layer, 32 units) & (1 layer, 64 units) & (1 layer, 128 units) & (3 layer, 32 units) \\
-%\hline
-%Testing Loss & 0.0887 & 0.0931 & 0.0925 & 0.0839 \\
-%Training Loss & 0.0895 & 0.0940 & 0.0918 & 0.0844\\
-%\hline
-%\end{tabular}
-%\end{center}
-%
-%For comparison, the loss reported is averaged over (number of instances * number of pixels). Thus, the total loss can be computed by multiplying by (55,000 * 783) for the training loss, and multiplying by (10,000 * 783) for the test loss.\\
-%
-%\textbf{(b)} We generated an in-painting dataset using 100 randomly sampled images from the test set, and removed the last 300 pixels. First, we predicted the most probable pixel at the 485th position under the 4 trained models by checking if the conditional probability of that pixel being white given all the previous pixels was greater than 0.5. Next, for the 10, 28, and 300 pixel in-paintings, we drew 300 pixels 10 times for each image, and drew slices at 10 and 28. We repeated this for all four models as well. Below, we report the comparison of cross entropy of ground truth images and generated images across all 4 predictions tasks, for each model.\\
-%
-%\begin{adjustbox}{max width=\textwidth}
-%\begin{tabular}{ |l|l|l|l|l|l|l|l|l|}
-%\hline
-%& GT 1 & GEN 1 & GT 10 & GEN 10 & GT 28 & GEN 28 & GT 300	 & GEN 300 \\
-%\hline
-%1-layer, size 32	& & & & & & & & \\
-%Average & 0.096785 & 0.096402 & 0.098652 & 0.098608 & 0.097901 & 0.097899 & 0.086705 & 0.087426 \\
-%Difference &  & -0.000383 &  & -0.000044 &  & -0.000002 &  & 0.000721 \\
-%\hline
-%1-layer, size 64 &  &  &  &  &  &  &  &  \\
-%Average & 0.100616 & 0.100170 & 0.102539 & 0.102544 & 0.101865 & 0.102063 & 0.090906 & 0.091805 \\
-%Difference &  & -0.000446 &  & 0.000004 &  & 0.000198 &  & 0.000899 \\
-%\hline
-%1-layer, size 128 &  &  &  &  &  &  &  &  \\
-%Average & 0.098843 & 0.098448 & 0.100542 & 0.100731 & 0.099754 & 0.100407 & 0.089148 & 0.094671 \\
-%Difference &  & -0.000395 &  & 0.000189 &  & 0.000654 &  & 0.005523 \\
-%\hline
-%3-layer, size 32 &  &  &  &  &  &  &  & \\
-%Average & 0.091763 & 0.091281 & 0.093160 & 0.093164 & 0.092332 & 0.092286 & 0.082199 & 0.081964 \\
-%Difference &  & -0.000482 &  & 0.000004 &  & -0.000046 &  & -0.000235 \\
-%\hline
-%\end{tabular}
-%\end{adjustbox}
-%\\
-%\newline
-%GT denotes ground truth cross entropies, while GEN denotes generated image cross entropies. 1, 10, 28 and 300 are the number of missing pixels that were generated. For 10, 28, and 300 pixel predictions, the cross entropies were averaged over 10 samples.\\
-%
-%One observation is that the GEN 300 images usually have higher cross entropy than their corresponding ground truth images. This is probably because of the downstream drift away from the underlying distribution, due to the sampling process occasionally generating pixel sequences that the model has not seen before and hence does not have much certainity about. This trend is reversed for the stacked model, which might indicate that it is overfitting the training distribution, and doesn't recognise images from the test set as being a part of the same distribution.\\
-%
-%In the appendix, a full list of ground truth and generated image cross entropies are also included.\\
-%
-%In Figures 4.1 - 4.15, we also report samples of the images generated by our models.\\
-%
-%\section{Task 3: In-painting}
-%
-%\textbf{(a)} 
-%We will use the following notation in the next exploration. \\
-%
-%\begin{tabular}{l l}
-%$\textbf{x}$ & a vector of pixels representing the whole image \\
-%$x_d$ & a single pixel of an image indexed by location $d$ \\
-%$\{x_d\}_{d \in \mathsf{S}}$ & a collection of pixels $x$ indexed by $d$ for all $d$ in some set $\mathsf{S}$ \\
-%$\mathsf{M}$ & a collection of pixels $\mathsf{M} = \{x_{l_1}, x_{l_2}, \ldots, x_{l_m}\}$ such that $ l_1 < l_2 < \ldots < l_m$ \\
-%$\mathsf{L}$ & a collection of pixel locations $\mathsf{L} = \{l_1, l_2, \ldots, l_m\}$ corresponding to $\mathsf{M}$ \\
-%$L$ & the last pixel location\\
-%$z$ & some arbitrary value assigned to a pixel\\
-%$\mathsf{Z}$ & some arbitrary assignments to pixels in $\mathsf{M}$ at locations $l_1, \ldots, l_n$\\
-%$\mathsf{Z}_{p:q}$ & the set $\mathsf{Z}$ above, constrained to locations $l_p, \ldots, l_q$\\
-%\end{tabular}
-%\\
-%\newline
-%
-%First, we provide the expression for evaluating the probability over the missing  pixel. Let the missing pixel be at location $l$, and so $mathsf{M} = \{x_l\}$ and $\mathsf{L} = \{l\}$. Then,
-%\begin{align*}
-%\mathbb{P} ( x_l = z | \{x_d\}_{d \not \in L} ) & = \dfrac{\mathbb{P} ( \{x_d\}_{d>l} | x_l = z, \{x_d\}_{d<l}) \cdot \mathbb{P} ( x_l = z | \{x_d\}_{d < l} )}{\mathbb{P} ( \{x_d\}_{d>l} | \{x_d\}_{d<l}) }   \\
-%& \quad\quad\quad\quad\quad\quad\quad \text{by Bayes' Rule} \\
-%& \propto \mathbb{P} ( \{x_d\}_{d>l} | x_l = z, \{x_d\}_{d<l}) \cdot \mathbb{P} ( x_l = z | \{x_d\}_{d < l} ) \\
-%& \quad\quad\quad\quad\quad\quad\quad \text{because the denominator is invariant on $x_l$} \\
-%& = \displaystyle \prod_{i=l}^{L} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{x_l = z}
-%\end{align*}
-%which is a product of conditional probabilities starting from the the missing pixel location to the end, conditioned on the value of the missing pixel to be equal to $z$.
-%\\
-%Consider the terms of $\displaystyle \prod_{i=1}^{l-1} \mathbb{P} ( x_i | \{x_d\}_{d<i} )$ which are not dependent on the value of $x_l$; this product is a positive constant, and can be multiplied by with RHS of the above proportionality without effect:
-%\begin{align*}
-%\mathbb{P} ( x_l = z | \{x_d\}_{d \not \in L} ) & \propto \displaystyle \prod_{i=l}^{L} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{x_l = z} \cdot \displaystyle \prod_{i=1}^{l-1} \mathbb{P} ( x_i | \{x_d\}_{d<i} )\\
-%& = \displaystyle \prod_{i=1}^{L} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{x_l = z}  \numberthis \\
-%\end{align*}
-%\newline
-%The RHS is now nothing but the likelihood of image under the model, conditioned on the value of $x_l$. Next, we make the observation that for a distribution where the data can only take the values 0 and 1, the cross entropy is equal to the negative log likelihood. Ths implies that in order to maximize $\mathbb{P} ( x_l = z | \{x_d\}_{d \not \in L} )$ we have to maximize the likelihood, and therefore minimise the cross-entropy. We use this result later to determine the most probable in-painting.\\
-%\newline
-%Second, we repeat the above exercise for the 2x2 patch. Let the missing pixels be at location $l_i$ for $i \in \{1,2,3,4\}$ and $l_l<l_2<l_3<l_4$, and so $\mathsf{M} = \{x_{l_i} \forall i\}$ and $\mathsf{L} = \{l_i \forall i\}$. Also, now, $\mathsf{Z} = \{ (x_{l_1} = z_1), (x_{l_2} = z_2),(x_{l_3} = z_3), (x_{l_4} = z_4) \}$. Then, as before,
-%\begin{align*}
-%\mathbb{P} ( \mathsf{Z} | \{x_d\}_{d \not \in L} ) & = \dfrac{\mathbb{P} ( \{x_d\}_{d>l_4} | \mathsf{Z}, \{x_d\}_{d \not \in \mathsf{L}, d<l_4}) \cdot \mathbb{P} ( \mathsf{Z} | \{x_d\}_{d \not \in \mathsf{L}, d<l_4} )}{\mathbb{P} ( \{x_d\}_{d>l} |  \{x_d\}_{d \not \in \mathsf{L}, d<l_4}) }  \\
-%& \propto \mathbb{P} ( \{x_d\}_{d>l_4} | \mathsf{Z}, \{x_d\}_{d \not \in \mathsf{L}, d<l_4}) \cdot \mathbb{P} ( \mathsf{Z} | \{x_d\}_{d \not \in \mathsf{L}, d<l_4} ) \\
-%& = \color{blue} \mathbb{P} ( \{x_d\}_{d>l_4} | \mathsf{Z}, \{x_d\}_{d \not \in \mathsf{L}, d<l_4}) \cdot \mathbb{P} ( \mathsf{Z}_{4} | \mathsf{Z}_{1:3}, \{x_d\}_{d \not \in \mathsf{L}, d<l_4}) \color{black} \cdot \color{red} \mathbb{P} ( \mathsf{Z}_{1:3} | \{x_d\}_{d \not \in \mathsf{L}, d<l_4} ) \\
-%& = \color{blue} \displaystyle \prod_{i=l_4}^{L} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{\mathsf{Z}} \color{black} \cdot \color{red} \mathbb{P} ( \mathsf{Z}_{1:3} | \{x_d\}_{d \not \in \mathsf{L}, d<l_4} ) \\
-%\end{align*}
-%\color{black} It is clear that $\color{red} \mathbb{P} ( \mathsf{Z}_{1:3} | \{x_d\}_{d \not \in \mathsf{L}, d<l_4} )$ \color{black} is in the same form as $\mathbb{P} ( \mathsf{Z} | \{x_d\}_{d \not \in L} )$, so without more effort, we can write down the unrolled proportionality expression:
-%\begin{align*}
-%\mathbb{P} ( \mathsf{Z} | \{x_d\}_{d \not \in L} ) \propto & \displaystyle \prod_{i=l_4}^{L} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{\mathsf{Z}} \cdot \displaystyle \prod_{i=l_3}^{l_4-1} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{\mathsf{Z}_{1:3}} \cdot \\
-%& \displaystyle \prod_{i=l_2}^{l_3-1} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{\mathsf{Z}_{1:2}} \cdot \displaystyle \prod_{i=l_1}^{l_2-1} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{\mathsf{Z}_1} \\
-%= & \displaystyle \prod_{i=l_1}^{L} \mathbb{P} ( x_i | \{x_d\}_{d<i} ) \mathrel{\stretchto{\mid}{3ex}}_{\mathsf{Z}}
-%\end{align*}
-%As before, we can multiply the RHS by the remaining terms $\displaystyle \prod_{i=1}^{l_1-1} \mathbb{P} ( x_i | \{x_d\}_{d<i} )$ which are not dependent on $\mathsf{Z}$ to get the likelihood. Using the same reasoning as earlier, we assert that this is proportional to the exponential of the negative cross entropy, hence maximising this likelihood is equivalent to minimising the cross-entropy.\\
-%\newline
-%\textbf{(b)} For this task, we used the 3-layered, 32 unit GRU model trained earlier. We picked this model because 1) objectively, it achieved the lowest loss among all models tested, and 2) subjectively, we felt this model's 300-pixel predictions were better than the other models.\\
-%
-%We proceeded with this exercise as follows: In both situations, we inpainted with all the possible combinations of the missing pixels, i.e. 2 combinations for the 1 missing pixel case, and 16 combinations for the 2x2 missing pixels case. We calculate the cross-entropy for all the possible in-paintings, and select the one with the lowest cross-entropy as the most probably one. This is because in the case of binary data, cross entropy is inversely proportional to log-likelihood. We have saved the most probable in-paintings in the third index of the numpy arrays \texttt{one\_pixel\_inpainted\_dataset.npy} and \texttt{2x2\_pixel\_inpainted\_dataset.npy}.\\
-%
-%The cross-entropy for the most probable sample is selected as the minimum of cross-entropies among all possible in-paintings. One of those possible in-paintings will in fact be the ground-truth image. This means that the cross-entropy of our most probable in-painting will always be less than or equal to the cross-entropy of the ground truth image. The table below presents summary statistics of the in-paintings and the ground-truth cross entropies.\\
-%\newline
-%\begin{tabular}{|l|r|r|}
-%\hline
-%& Mean & Standard deviation \\
-%\hline
-%One pixel in-painting & 0.0864369 & 0.0248118 \\
-%One pixel ground truth & 0.0864991 & 0.0248191 \\
-%2x2 pixel in-painting & 0.0852457 & 0.0238469 \\
-%2x2 pixel ground truth & 0.0856751 & 0.0240138 \\
-%\hline
-%\end{tabular}
-%\\
-%\newline
-%These cross entropies are calculated as averages over all 784 pixels. Additionally, most probable in-painting cross entropy and ground truth cross entropy for the datasets are included in \texttt{one\_pixel\_inpainted\_dataset\_xents.npy} and \texttt{2x2\_pixel\_inpainted\_dataset\_xents.npy}. \\
-%Toward the end of this report we also include plots of 20 samples for this in-painting exercise, for both one pixel and 2x2 pixels.
-%\newpage
-%\thispagestyle{empty}
-%\vspace*{-90pt}
-%\enlargethispage{300pt}%
-%Cross entropies for images predicted by single layer 32 unit GRU, and ground truths\\
-%\begin{adjustbox}{totalheight=0.95\paperheight}
-%\csvautotabular{models/Predictor_GRU_32_1/xent.csv}
-%\end{adjustbox}
-%
-%\newpage
-%\thispagestyle{empty}
-%\vspace*{-90pt}
-%\enlargethispage{300pt}%
-%Cross entropies for images predicted by single layer 64 unit GRU, and ground truths\\
-%\begin{adjustbox}{totalheight=0.95\paperheight}
-%\csvautotabular{models/Predictor_GRU_64_1/xent.csv}
-%\end{adjustbox}
-%
-%
-%\newpage
-%\thispagestyle{empty}
-%\vspace*{-90pt}
-%\enlargethispage{300pt}%
-%Cross entropies for images predicted by single layer 128 unit GRU, and ground truths\\
-%\begin{adjustbox}{totalheight=0.95\paperheight}
-%\csvautotabular{models/Predictor_GRU_128_1/xent.csv}
-%\end{adjustbox}
-%
-%
-%\newpage
-%\thispagestyle{empty}
-%\vspace*{-90pt}
-%\enlargethispage{300pt}%
-%Cross entropies for images predicted by 3-layer 32 unit GRU, and ground truths\\
-%\begin{adjustbox}{totalheight=0.95\paperheight}
-%\csvautotabular{models/Predictor_GRU_32_3/xent.csv}
-%\end{adjustbox}
-%
-%
-%
-%\newpage
-%
-%\begin{python}
-%import os
-%
-%cats = ['success/', 'failure/', 'variance/']
-%text = ['Successful category', 'Failure category', 'High variance category', 'Ground truth', 'Mask']
-%dirs = [1, 10, 28, 300, 'gt', 'mask']
-%
-%extension = ".png"
-%
-%for i, cat in enumerate(cats):
-%    for direc in dirs:
-%        # directory = "models/images/selected/variance/300/"
-%        directory = 'models/images/selected/'+cat+str(direc)+'/'
-%        files = sorted([file for file in os.listdir(directory) if file.lower().endswith(extension)])
-%
-%        images_in_row = 4
-%
-%        if type(direc) == int:            
-%            print r"\begin{figure}[!ht]"
-%            print r"\begin{center}"
-%
-%            for num, file in enumerate(files):
-%                f2 = directory + file
-%                n = str.split(file,".")[0]
-%                print r"\subfigure{"
-%                print r"\includegraphics[width=2cm]{%s}" % f2
-%                print r"}"
-%                if (num+1)%images_in_row == 0:
-%                    print r"\\"
-%
-%            print r"\caption{%s pixel predictions (%s) with cross entropy. Models arranged column-wise starting from single layer with 32 units, 3-layer with 32 units, single layer with 64 units, and single layer with 128 units.}" % (str(direc), text[i])
-%            print r"\end{center}"
-%            print r"\end{figure}"
-%        elif direc == 'gt':
-%            print r"\begin{figure}[!ht]"
-%            print r"\begin{center}"
-%
-%            for num, file in enumerate(files):
-%                f2 = directory + file
-%                n = str.split(file,".")[0]
-%                if n == '1':
-%                    print r"\subfigure[%s pixel]{" % n
-%                else:
-%                    print r"\subfigure[%s pixels]{" % n
-%                print r"\includegraphics[width=2cm]{%s}" % f2
-%                print r"}"
-%                if (num+1)%images_in_row == 0:
-%                    print r"\\"
-%
-%            print r"\caption{Ground truths (%s). Cross entropy is to be ignored here.}" % text[i]
-%            print r"\end{center}"
-%            print r"\end{figure}"
-%
-%cats = ['one/', '2x2/']
-%text = ['one pixel', '2x2 image patch']
-%images_in_row = 3
-%
-%for i, cat in enumerate(cats):
-%    direc = 'figures/inpainting/'+cat
-%    print r"\newpage"
-%    files = sorted([file for file in os.listdir(direc) if file.lower().endswith(extension)])
-%    print r"\begin{figure}[!ht]"
-%    print r"\begin{center}"
-%    
-%    for num,file in enumerate(files):
-%        f2 = direc+file
-%        print r"\subfigure{"
-%        print r"\includegraphics[width=4cm]{%s}" % f2
-%        print r"}"
-%        if (num+1)%images_in_row == 0:
-%            print r"\\"
-%            
-%    print r"\caption{Samples of Masked image, ground truth, and in-paintings for %s}" % text[i]
-%    print r"\end{center}"
-%    print r"\end{figure}"
-%\end{python}
+The boxing agent usually gets a couple of quick hits early on in the game, allowing it to secure a discounted reward which is positive. It still loses the game almost every time, but sometimes by very close margins. It also blocks the other boxer from making too many hits for the duration of the game.
 
 
 

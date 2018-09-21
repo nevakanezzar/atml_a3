@@ -14,11 +14,11 @@
 \BOOKMARK [1][-]{section.2}{Problem B: Atari Games}{}% 14
 \BOOKMARK [2][-]{subsection.2.1}{Random policy}{section.2}% 15
 \BOOKMARK [2][-]{subsection.2.2}{Untrained Q-network}{section.2}% 16
-\BOOKMARK [2][-]{subsection.2.3}{Can they store the current input?}{section.2}% 17
-\BOOKMARK [3][-]{subsubsection.2.3.1}{LSTM}{subsection.2.3}% 18
-\BOOKMARK [3][-]{subsubsection.2.3.2}{GRU}{subsection.2.3}% 19
-\BOOKMARK [2][-]{subsection.2.4}{Can they ignore the current input?}{section.2}% 20
-\BOOKMARK [3][-]{subsubsection.2.4.1}{LSTM}{subsection.2.4}% 21
-\BOOKMARK [3][-]{subsubsection.2.4.2}{GRU}{subsection.2.4}% 22
-\BOOKMARK [2][-]{subsection.2.5}{Are GRUs a special case of LSTMs?}{section.2}% 23
-\BOOKMARK [1][-]{section.3}{Task 1: Classification}{}% 24
+\BOOKMARK [2][-]{subsection.2.3}{Training agents to play Atari games}{section.2}% 17
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Pong}{subsection.2.3}% 18
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Ms Pacman}{subsection.2.3}% 19
+\BOOKMARK [3][-]{subsubsection.2.3.3}{Boxing}{subsection.2.3}% 20
+\BOOKMARK [2][-]{subsection.2.4}{Testing the Atari agents}{section.2}% 21
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Pong}{subsection.2.4}% 22
+\BOOKMARK [3][-]{subsubsection.2.4.2}{Ms Pacman}{subsection.2.4}% 23
+\BOOKMARK [3][-]{subsubsection.2.4.3}{Boxing}{subsection.2.4}% 24

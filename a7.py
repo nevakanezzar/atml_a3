@@ -111,7 +111,7 @@ actions_indices = tf.stack([row_indices_in, a_in],axis=1)
 batch_size = tf.shape(s_in)[0]
 
 q_out = tf.matmul(tf.nn.relu(tf.matmul(s_in,w1)), w2)  #original network
-q1_out = tf.matmul(tf.nn.relu(tf.matmul(s_in,w3)), w4) #target network
+q1_out = tf.matmul(tf.nn.relu(tf.matmul(s1_in,w3)), w4) #target network
 
 target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.reduce_max(q1_out,axis=1))
 
@@ -120,7 +120,7 @@ bellman_residual = target - tf.gather_nd(q_out,actions_indices)
 thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
+loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) #+ tf.reduce_sum(reg_losses)
 train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
@@ -137,16 +137,17 @@ def run():
 
 	for trial in range(NUM_TRIALS):
 		S_BUFF = np.zeros([BUFFER_SIZE,STATE_DIM])
-		A_BUFF = np.zeros([BUFFER_SIZE,SCALAR_DIM])
-		R_BUFF = np.zeros([BUFFER_SIZE,SCALAR_DIM])
+		A_BUFF = np.zeros([BUFFER_SIZE])
+		R_BUFF = np.zeros([BUFFER_SIZE])
 		S1_BUFF = np.zeros([BUFFER_SIZE,STATE_DIM])
-		ND_BUFF = np.zeros([BUFFER_SIZE,SCALAR_DIM])  #not-done buffer
+		ND_BUFF = np.zeros([BUFFER_SIZE])  #not-done buffer
 
 		init_op = tf.global_variables_initializer()
 		saver = tf.train.Saver(write_version = tf.train.SaverDef.V1)
 		with tf.Session() as sess:
 			sess.run(init_op)	# init vars
 			step = -1
+			row_indices = np.arange(MINI_BATCH_SIZE)
 			for episode in range(NUM_EPISODES):
 				if episode%MODULO==0:
 					# print("Updating target network...")
@@ -165,7 +166,7 @@ def run():
 					#select action
 					if np.random.random()>EPSILON:
 						qs = sess.run(q_out,feed_dict={s_in:np.expand_dims(s_t,axis=0)})
-						a_t = np.argmax(qs)				
+						a_t = np.argmax(qs)
 					else:
 						a_t = np.random.choice(ACTION_DIM)
 					step+=1
@@ -175,19 +176,20 @@ def run():
 					s1_t, r_t, done, info = env.step(a_t)
 					s1_t, r_t, done, info = modify_outputs(s1_t, r_t, done, info,ep_steps+1)
 					not_done = (not done)*1.0
-					S_BUFF[step%BUFFER_SIZE] = s_t
-					A_BUFF[step%BUFFER_SIZE] = a_t
-					R_BUFF[step%BUFFER_SIZE] = r_t
-					S1_BUFF[step%BUFFER_SIZE] = s1_t
-					ND_BUFF[step%BUFFER_SIZE] = not_done
+					ind = step%BUFFER_SIZE
+					S_BUFF[ind] = s_t
+					A_BUFF[ind] = a_t
+					R_BUFF[ind] = r_t
+					S1_BUFF[ind] = s1_t
+					ND_BUFF[ind] = not_done
 
 					#2) second we train:
-					inds = np.random.choice(len(S_BUFF),MINI_BATCH_SIZE)
+					inds = np.random.choice(min(BUFFER_SIZE,step+1),MINI_BATCH_SIZE)
 					S = S_BUFF[inds]
-					A = np.reshape(A_BUFF[inds], MINI_BATCH_SIZE)
-					R = np.reshape(R_BUFF[inds], MINI_BATCH_SIZE)
+					A = A_BUFF[inds]
+					R = R_BUFF[inds]
 					S1 = S1_BUFF[inds]
-					ND = np.reshape(ND_BUFF[inds], MINI_BATCH_SIZE)
+					ND = ND_BUFF[inds]
 				
 					[l2,bellman_l2,_] = sess.run([loss,bellman_residual,train_op], feed_dict={
 									s_in:S,
@@ -195,7 +197,7 @@ def run():
 									r_in:R,
 									s1_in:S1,
 									discount_in:DISCOUNT,
-									row_indices_in:np.arange(len(S)),
+									row_indices_in:row_indices,
 									not_done_in:ND
 									})
 					l1 += l2
@@ -303,10 +305,10 @@ def load(LOAD_FILENAME):
 
 
 if __name__ == '__main__':
-	if len(sys.argv)>2:
-		if sys.argv[2].lower() == '-e':
+	if len(sys.argv)>3:
+		if sys.argv[3].lower() == '-e':
 			try:
-				FILENAME = sys.argv[3]
+				FILENAME = sys.argv[4]
 				LOAD_FILENAME = MODEL_FOLDER+FILENAME+".model"
 			except:
 				print("Something went wrong, try providing a valid filename after the -e flag")

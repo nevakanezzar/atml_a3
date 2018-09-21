@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.27)  10 APR 2017 17:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.27)  11 APR 2017 22:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -676,6 +676,14 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip71
 )
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count127
+\float@exts=\toks31
+\float@box=\box32
+\@float@everytoks=\toks32
+\@floatcapt=\box33
+)
 (/usr/share/texlive/texmf-dist/tex/latex/sectsty/sectsty.sty
 Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
 les
@@ -686,7 +694,7 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 (scrartcl)              I'd suggest to use 
 (scrartcl)              package `scrlayer-scrpage'.
 (scrartcl)              Nevertheless, using requested
-(scrartcl)              package `fancyhdr' on input line 32.
+(scrartcl)              package `fancyhdr' on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip72
@@ -702,69 +710,69 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 (./15115014_report.aux)
 \openout1 = `15115014_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 65.
-LaTeX Font Info:    Try loading font information for FML+futm on input line 65.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 66.
+LaTeX Font Info:    Try loading font information for FML+futm on input line 66.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 65.
-LaTeX Font Info:    Try loading font information for FMS+futm on input line 65.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 66.
+LaTeX Font Info:    Try loading font information for FMS+futm on input line 66.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmsfutm.fd
 File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
 )
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 65.
-LaTeX Font Info:    Try loading font information for FMX+futm on input line 65.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 66.
+LaTeX Font Info:    Try loading font information for FMX+futm on input line 66.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmxfutm.fd
 File: fmxfutm.fd futm-extension
 )
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 65.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 65.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 66.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 66.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Try loading font information for T1+futs on input line 65.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 66.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/t1futs.fd
 File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count127
+\scratchcounter=\count128
 \scratchdimen=\dimen140
-\scratchbox=\box32
-\nofMPsegments=\count128
-\nofMParguments=\count129
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count130
+\scratchbox=\box34
+\nofMPsegments=\count129
+\nofMParguments=\count130
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count131
 \MPscratchDim=\dimen141
-\MPnumerator=\count131
-\makeMPintoPDFobject=\count132
-\everyMPtoPDFconversion=\toks32
+\MPnumerator=\count132
+\makeMPintoPDFobject=\count133
+\everyMPtoPDFconversion=\toks34
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -780,8 +788,8 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring OFF on input line 65.
+\AtBeginShipoutBox=\box35
+Package hyperref Info: Link coloring OFF on input line 66.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -789,178 +797,178 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count133
+\c@section@level=\count134
 )
-LaTeX Info: Redefining \ref on input line 65.
-LaTeX Info: Redefining \pageref on input line 65.
-LaTeX Info: Redefining \nameref on input line 65.
+LaTeX Info: Redefining \ref on input line 66.
+LaTeX Info: Redefining \pageref on input line 66.
+LaTeX Info: Redefining \nameref on input line 66.
 
 (./15115014_report.out) (./15115014_report.out)
 \@outlinefile=\write6
 \openout6 = `15115014_report.out'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--72
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--74
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 75--76
+Underfull \hbox (badness 10000) in paragraph at lines 76--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+Underfull \hbox (badness 10000) in paragraph at lines 78--79
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
+Underfull \hbox (badness 10000) in paragraph at lines 80--81
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--82
+Underfull \hbox (badness 10000) in paragraph at lines 82--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--84
+Underfull \hbox (badness 10000) in paragraph at lines 84--85
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--86
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--88
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 92--93
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 96--97
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
 
-Overfull \hbox (34.2073pt too wide) in paragraph at lines 99--100
+Overfull \hbox (34.2073pt too wide) in paragraph at lines 100--101
 []\T1/futs/m/n/10.95 I have read the UCL guid-ance and ad-vice on pla-gia-rism 
 avail-able from http://www.ucl.ac.uk/current-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 99--100
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 102--103
+Underfull \hbox (badness 10000) in paragraph at lines 103--104
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 105--106
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 111.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 112.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Try loading font information for FML+futmi on input line 11
-1.
+2.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutmi.fd
 File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 111.
+(Font)              scaled to size 13.24796pt on input line 112.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 111.
+(Font)              scaled to size 9.19998pt on input line 112.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.35999pt on input line 111.
+(Font)              scaled to size 7.35999pt on input line 112.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 111.
+(Font)              scaled to size 13.24796pt on input line 112.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 111.
+(Font)              scaled to size 9.19998pt on input line 112.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.35999pt on input line 111.
-LaTeX Font Info:    Try loading font information for U+msa on input line 111.
+(Font)              scaled to size 7.35999pt on input line 112.
+LaTeX Font Info:    Try loading font information for U+msa on input line 112.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 111.
+LaTeX Font Info:    Try loading font information for U+msb on input line 112.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 118.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 119.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
  []
 
 
-Overfull \hbox (57.0476pt too wide) in paragraph at lines 229--231
+Overfull \hbox (57.0476pt too wide) in paragraph at lines 230--232
 \T1/cmtt/m/n/10.95 Episode finished after 16 timesteps Reward from initial stat
 e is -0.8600583546412883 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--231
+Underfull \hbox (badness 10000) in paragraph at lines 230--232
 
  []
 
 
-Overfull \hbox (57.0476pt too wide) in paragraph at lines 229--231
+Overfull \hbox (57.0476pt too wide) in paragraph at lines 230--232
 \T1/cmtt/m/n/10.95 Episode finished after 54 timesteps Reward from initial stat
 e is -0.5870367819374844 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--231
+Underfull \hbox (badness 10000) in paragraph at lines 230--232
 
  []
 
 
-Overfull \hbox (57.0476pt too wide) in paragraph at lines 229--231
+Overfull \hbox (57.0476pt too wide) in paragraph at lines 230--232
 \T1/cmtt/m/n/10.95 Episode finished after 26 timesteps Reward from initial stat
 e is -0.7778213593991465 
  []
@@ -968,29 +976,29 @@ e is -0.7778213593991465
 [2
 
 ] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 234--235
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 
  []
 
 
-Overfull \hbox (0.4639pt too wide) in paragraph at lines 238--239
+Overfull \hbox (0.4639pt too wide) in paragraph at lines 239--240
 []\T1/cmtt/m/n/10.95 Mean and stddev. of episode times:       22.06    10.94149
 89832 
  []
 
 
-Overfull \hbox (11.78064pt too wide) in paragraph at lines 238--239
+Overfull \hbox (11.78064pt too wide) in paragraph at lines 239--240
 \T1/cmtt/m/n/10.95 Mean and stddev. of episode rewards: -0.805817253927    0.08
 36435358041 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 238--239
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
 
  []
 
@@ -1006,186 +1014,448 @@ LaTeX Font Info:    Font shape `U/futm/m/n' will be
 (Font)              scaled to size 7.63599pt on input line 244.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
 (Font)              scaled to size 5.51999pt on input line 244.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 244.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 244.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 244.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 244.
-
-Underfull \hbox (badness 10000) in paragraph at lines 244--245
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 246--247
-
- []
-
 [5]
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 285
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 248.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 248.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 248.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 248.
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 250--251
+
+ []
+
+<figures/a3a_0.00001.png, id=128, 453.3738pt x 341.1144pt>
+File: figures/a3a_0.00001.png Graphic file (type png)
+
+<use figures/a3a_0.00001.png>
+Package pdftex.def Info: figures/a3a_0.00001.png used on input line 259.
+(pdftex.def)             Requested size: 302.5344pt x 227.62204pt.
+
+<figures/a3a_0.0001.png, id=130, 453.6147pt x 341.1144pt>
+File: figures/a3a_0.0001.png Graphic file (type png)
+
+<use figures/a3a_0.0001.png>
+Package pdftex.def Info: figures/a3a_0.0001.png used on input line 271.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [6pdfTeX warning (ext4): destination with the same identifier (name{figure.1.1
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.274 
+       <./figures/a3a_0.00001.png>]
+<figures/a3a_0.001.png, id=139, 453.6147pt x 341.1144pt>
+File: figures/a3a_0.001.png Graphic file (type png)
+
+<use figures/a3a_0.001.png>
+Package pdftex.def Info: figures/a3a_0.001.png used on input line 277.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+
+<figures/a3a_0.01.png, id=140, 453.6147pt x 341.1144pt>
+File: figures/a3a_0.01.png Graphic file (type png)
+
+<use figures/a3a_0.01.png>
+Package pdftex.def Info: figures/a3a_0.01.png used on input line 289.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [7pdfTeX warning (ext4): destination with the same identifier (name{figure.1.2
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.292 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+1.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.292 
+       <./figures/a3a_0.0001.png> <./figures/a3a_0.001.png>]
+<figures/a3a_0.1.png, id=150, 453.6147pt x 341.1144pt>
+File: figures/a3a_0.1.png Graphic file (type png)
+
+<use figures/a3a_0.1.png>
+Package pdftex.def Info: figures/a3a_0.1.png used on input line 295.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+
+<figures/a3a_0.5.png, id=151, 453.6147pt x 341.1144pt>
+File: figures/a3a_0.5.png Graphic file (type png)
+
+<use figures/a3a_0.5.png>
+Package pdftex.def Info: figures/a3a_0.5.png used on input line 307.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [8pdfTeX warning (ext4): destination with the same identifier (name{figure.1.4
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.310 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+1.5}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.310 
+       <./figures/a3a_0.01.png> <./figures/a3a_0.1.png>]
+<figures/a3b_0.00001.png, id=160, 453.6147pt x 341.1144pt>
+File: figures/a3b_0.00001.png Graphic file (type png)
+
+<use figures/a3b_0.00001.png>
+Package pdftex.def Info: figures/a3b_0.00001.png used on input line 323.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [9pdfTeX warning (ext4): destination with the same identifier (name{figure.1.6
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.326 
+       <./figures/a3a_0.5.png>]
+<figures/a3b_0.0001.png, id=167, 453.6147pt x 341.1144pt>
+File: figures/a3b_0.0001.png Graphic file (type png)
+
+<use figures/a3b_0.0001.png>
+Package pdftex.def Info: figures/a3b_0.0001.png used on input line 329.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+
+<figures/a3b_0.001.png, id=168, 453.6147pt x 341.1144pt>
+File: figures/a3b_0.001.png Graphic file (type png)
+
+<use figures/a3b_0.001.png>
+Package pdftex.def Info: figures/a3b_0.001.png used on input line 341.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [10pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+7}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.344 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+1.8}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.344 
+       <./figures/a3b_0.00001.png> <./figures/a3b_0.0001.png>]
+<figures/a3b_0.01.png, id=177, 453.3738pt x 341.1144pt>
+File: figures/a3b_0.01.png Graphic file (type png)
+
+<use figures/a3b_0.01.png>
+Package pdftex.def Info: figures/a3b_0.01.png used on input line 347.
+(pdftex.def)             Requested size: 302.5344pt x 227.62204pt.
+
+<figures/a3b_0.1.png, id=178, 453.6147pt x 341.1144pt>
+File: figures/a3b_0.1.png Graphic file (type png)
+
+<use figures/a3b_0.1.png>
+Package pdftex.def Info: figures/a3b_0.1.png used on input line 359.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [11pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+9}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.362 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+1.10}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.362 
+       <./figures/a3b_0.001.png> <./figures/a3b_0.01.png>]
+<figures/a3b_0.5.png, id=188, 453.6147pt x 341.1144pt>
+File: figures/a3b_0.5.png Graphic file (type png)
+
+<use figures/a3b_0.5.png>
+Package pdftex.def Info: figures/a3b_0.5.png used on input line 365.
+(pdftex.def)             Requested size: 302.69514pt x 227.62204pt.
+ [12pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+11}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.373 \subsection{Online Q-learning}
+                                    pdfTeX warning (ext4): destination with the
+ same identifier (name{figure.1.12}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.373 \subsection{Online Q-learning}
+                                     <./figures/a3b_0.1.png> <./figures/a3b_0.5
+.png>] <figures/a4_0.01.png, id=197, 454.3374pt x 341.1144pt>
+File: figures/a4_0.01.png Graphic file (type png)
+
+<use figures/a4_0.01.png>
+Package pdftex.def Info: figures/a4_0.01.png used on input line 379.
+(pdftex.def)             Requested size: 378.98561pt x 284.52756pt.
+ [13pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+13}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.388 \newpage
+               <./figures/a4_0.01.png>]
+<figures/a5_30_0.01.png, id=205, 454.5783pt x 341.1144pt>
+File: figures/a5_30_0.01.png Graphic file (type png)
+
+<use figures/a5_30_0.01.png>
+Package pdftex.def Info: figures/a5_30_0.01.png used on input line 397.
+(pdftex.def)             Requested size: 379.18655pt x 284.52756pt.
+ [14pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+14}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.405 \newpage
+               <./figures/a5_30_0.01.png>]
+<figures/a5_1000_0.01.png, id=212, 454.5783pt x 341.1144pt>
+File: figures/a5_1000_0.01.png Graphic file (type png)
+
+<use figures/a5_1000_0.01.png>
+Package pdftex.def Info: figures/a5_1000_0.01.png used on input line 411.
+(pdftex.def)             Requested size: 379.18655pt x 284.52756pt.
+ [15pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+15}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.420 \newpage
+               <./figures/a5_1000_0.01.png>]
+<figures/a6_0.01_10000.png, id=219, 454.8192pt x 341.1144pt>
+File: figures/a6_0.01_10000.png Graphic file (type png)
+
+<use figures/a6_0.01_10000.png>
+Package pdftex.def Info: figures/a6_0.01_10000.png used on input line 429.
+(pdftex.def)             Requested size: 379.38751pt x 284.52756pt.
+ [16pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+16}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.434 \newpage
+               <./figures/a6_0.01_10000.png>]
+<figures/a7_0.01_10000.png, id=226, 454.8192pt x 341.1144pt>
+File: figures/a7_0.01_10000.png Graphic file (type png)
+
+<use figures/a7_0.01_10000.png>
+Package pdftex.def Info: figures/a7_0.01_10000.png used on input line 443.
+(pdftex.def)             Requested size: 379.38751pt x 284.52756pt.
+ [17pdfTeX warning (ext4): destination with the same identifier (name{figure.1.
+17}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.449 \newpage
+               <./figures/a7_0.01_10000.png>]
+<figures/a8_0.01.png, id=233, 454.5783pt x 341.1144pt>
+File: figures/a8_0.01.png Graphic file (type png)
+
+<use figures/a8_0.01.png>
+Package pdftex.def Info: figures/a8_0.01.png used on input line 458.
+(pdftex.def)             Requested size: 379.18655pt x 284.52756pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 462--463
+
+ []
+
+[18pdfTeX warning (ext4): destination with the same identifier (name{figure.1.1
+8}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.466 \newpage
+               <./figures/a8_0.01.png>]
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 470
 .
- (/usr/share/texlive/texmf-dist/tex/latex/fourier/ts1futs.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/fourier/ts1futs.fd
 File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
-) [6]
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
+)
+Underfull \hbox (badness 10000) in paragraph at lines 488--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--308
+Underfull \hbox (badness 10000) in paragraph at lines 497--498
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 316--317
+Underfull \hbox (badness 10000) in paragraph at lines 506--507
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--326
+Underfull \hbox (badness 10000) in paragraph at lines 515--516
+
+ []
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 519--520
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 329--330
+Underfull \hbox (badness 10000) in paragraph at lines 528--529
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 338--339
+Underfull \hbox (badness 10000) in paragraph at lines 537--538
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 347--348
-
- []
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 356--357
+Underfull \hbox (badness 10000) in paragraph at lines 546--547
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 358--359
+Underfull \hbox (badness 10000) in paragraph at lines 548--549
 
  []
 
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 397--398
+[20]
+Overfull \hbox (1.66501pt too wide) in paragraph at lines 555--556
+\T1/futs/m/n/10.95 After hy-per-pa-ram-e-ter op-ti-mi-sa-tion us-ing grid-searc
+h, the best per-form-ing agent was se-lected.
+ []
+
+<figures/b34_0_0.00001_0_train.png, id=249, 453.6147pt x 341.1144pt>
+File: figures/b34_0_0.00001_0_train.png Graphic file (type png)
+
+<use figures/b34_0_0.00001_0_train.png>
+Package pdftex.def Info: figures/b34_0_0.00001_0_train.png used on input line 5
+62.
+(pdftex.def)             Requested size: 378.38277pt x 284.52756pt.
+ [21pdfTeX warning (ext4): destination with the same identifier (name{figure.2.
+1}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.567 
+       <./figures/b34_0_0.00001_0_train.png>]
+Overfull \hbox (1.66501pt too wide) in paragraph at lines 569--570
+\T1/futs/m/n/10.95 After hy-per-pa-ram-e-ter op-ti-mi-sa-tion us-ing grid-searc
+h, the best per-form-ing agent was se-lected.
+ []
+
+<figures/b34_1_0.00001_500000_train.png, id=256, 453.6147pt x 341.1144pt>
+File: figures/b34_1_0.00001_500000_train.png Graphic file (type png)
+
+<use figures/b34_1_0.00001_500000_train.png>
+Package pdftex.def Info: figures/b34_1_0.00001_500000_train.png used on input l
+ine 576.
+(pdftex.def)             Requested size: 378.38277pt x 284.52756pt.
+
+Overfull \hbox (1.66501pt too wide) in paragraph at lines 583--584
+\T1/futs/m/n/10.95 After hy-per-pa-ram-e-ter op-ti-mi-sa-tion us-ing grid-searc
+h, the best per-form-ing agent was se-lected.
+ []
+
+<figures/b34_2_0.0001_0_train.png, id=257, 453.6147pt x 341.1144pt>
+File: figures/b34_2_0.0001_0_train.png Graphic file (type png)
+
+<use figures/b34_2_0.0001_0_train.png>
+Package pdftex.def Info: figures/b34_2_0.0001_0_train.png used on input line 59
+0.
+(pdftex.def)             Requested size: 378.38277pt x 284.52756pt.
+ [22pdfTeX warning (ext4): destination with the same identifier (name{figure.2.
+2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.592 \end{figure}
+                   <./figures/b34_1_0.00001_500000_train.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 594--595
 
  []
 
+[23pdfTeX warning (ext4): destination with the same identifier (name{figure.2.3
+}) has been already used, duplicate ignored
 
-Underfull \hbox (badness 10000) in paragraph at lines 400--401
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.602 \subsubsection{Pong}
+                           <./figures/b34_2_0.0001_0_train.png>]
+<figures/b34_0_0.00001_0_test.png, id=270, 453.8556pt x 341.1144pt>
+File: figures/b34_0_0.00001_0_test.png Graphic file (type png)
 
- []
+<use figures/b34_0_0.00001_0_test.png>
+Package pdftex.def Info: figures/b34_0_0.00001_0_test.png used on input line 61
+0.
+(pdftex.def)             Requested size: 378.58372pt x 284.52756pt.
 
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 403.
+<figures/b34_1_0.00001_500000_test.png, id=271, 453.6147pt x 341.1144pt>
+File: figures/b34_1_0.00001_500000_test.png Graphic file (type png)
 
-Underfull \hbox (badness 10000) in paragraph at lines 410--411
+<use figures/b34_1_0.00001_500000_test.png>
+Package pdftex.def Info: figures/b34_1_0.00001_500000_test.png used on input li
+ne 624.
+(pdftex.def)             Requested size: 378.38277pt x 284.52756pt.
+ [24pdfTeX warning (ext4): destination with the same identifier (name{figure.2.
+4}) has been already used, duplicate ignored
 
- []
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.627 
+       <./figures/b34_0_0.00001_0_test.png>]
+<figures/b34_2_0.0001_0_test.png, id=278, 453.6147pt x 341.1144pt>
+File: figures/b34_2_0.0001_0_test.png Graphic file (type png)
 
+<use figures/b34_2_0.0001_0_test.png>
+Package pdftex.def Info: figures/b34_2_0.0001_0_test.png used on input line 638
+.
+(pdftex.def)             Requested size: 378.38277pt x 284.52756pt.
+ [25pdfTeX warning (ext4): destination with the same identifier (name{figure.2.
+5}) has been already used, duplicate ignored
 
-Underfull \hbox (badness 10000) in paragraph at lines 412--413
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.641 
+       <./figures/b34_1_0.00001_500000_test.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 648.
+ [26pdfTeX warning (ext4): destination with the same identifier (name{figure.2.
+6}) has been already used, duplicate ignored
 
- []
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.648 \end{document}
+                     <./figures/b34_2_0.0001_0_test.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 648.
 
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 439--440
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 441--442
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--444
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 445--446
-
- []
-
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 451--452
-
- []
-
-
-Overfull \hbox (38.17728pt too wide) in paragraph at lines 456--467
- [] 
- []
-
-
-Overfull \hbox (38.17728pt too wide) in paragraph at lines 470--481
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 484--485
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 486--488
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 489--490
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 491--492
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 493--495
-
- []
-
-[11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 808.
- [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 808.
- (./15115014_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 808.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 808.
+(./15115014_report.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 648.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 648.
 Package rerunfilecheck Info: File `15115014_report.out' has not changed.
-(rerunfilecheck)             Checksum: AB2E73CE427438CBB6A1924F42A88EE8;1729.
+(rerunfilecheck)             Checksum: 452ED3681A0404262F730356EFBFA8EE;1724.
  ) 
 Here is how much of TeX's memory you used:
- 11971 strings out of 493029
- 191850 string characters out of 6136234
- 346893 words of memory out of 5000000
- 15195 multiletter control sequences out of 15000+600000
- 115781 words of font info for 130 fonts, out of 8000000 for 9000
+ 12168 strings out of 493029
+ 195974 string characters out of 6136234
+ 347177 words of memory out of 5000000
+ 15342 multiletter control sequences out of 15000+600000
+ 114409 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,12n,54p,974b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
-fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
+ 45i,12n,54p,1010b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
+e/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/public/fourier/fourier-mlit.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/fourier/fourier-ms.pfb></usr/share/texlive/texmf-dist/fonts/type1/adobe
-/utopia/putb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/adobe/utopia/putr
-8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb></us
-r/share/texmf/fonts/type1/public/cm-super/sftt0900.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sftt1095.pfb>
-Output written on 15115014_report.pdf (12 pages, 147543 bytes).
+/utopia/putr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/adobe/utopia/putr
+i8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0900.pfb></usr/share/
+texmf/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on 15115014_report.pdf (26 pages, 5712903 bytes).
 PDF statistics:
- 215 PDF objects out of 1000 (max. 8388607)
- 192 compressed objects within 2 object streams
- 52 named destinations out of 1000 (max. 500000)
- 193 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 335 PDF objects out of 1000 (max. 8388607)
+ 250 compressed objects within 3 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 313 words of extra memory for PDF output out of 10000 (max. 10000000)
 

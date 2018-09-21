@@ -116,7 +116,7 @@ bellman_residual = target - tf.gather_nd(q_out,actions_indices)
 thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
+loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) #+ tf.reduce_sum(reg_losses)
 train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
@@ -285,10 +285,10 @@ def load(LOAD_FILENAME):
 
 
 if __name__ == '__main__':
-	if len(sys.argv)>2:
-		if sys.argv[2].lower() == '-e':
+	if len(sys.argv)>3:
+		if sys.argv[3].lower() == '-e':
 			try:
-				FILENAME = sys.argv[3]
+				FILENAME = sys.argv[4]
 				LOAD_FILENAME = MODEL_FOLDER+FILENAME+".model"
 			except:
 				print("Something went wrong, try providing a valid filename after the -e flag")

@@ -21,6 +21,12 @@ if len(sys.argv) > 1:
 if len(sys.argv) > 2:
 	step = int(sys.argv[2])
 
+if len(sys.argv) > 3:
+	X_LABEL = sys.argv[3]
+else:
+	X_LABEL = 'Epochs'
+
+
 filename = './save/'+f+'.csv'
 savename = './save/'+f+'.png'
 
@@ -59,7 +65,7 @@ for i in range(N_ROWS):
 		for tick in axs[i,j].xaxis.get_major_ticks():
 			tick.label.set_fontsize(TICK_FONT_SIZE)
 		if i==1:
-			axs[i,j].set_xlabel('Epochs', fontsize=TICK_FONT_SIZE)
+			axs[i,j].set_xlabel(X_LABEL, fontsize=TICK_FONT_SIZE)
 
 fig.tight_layout() 
 fig.show()

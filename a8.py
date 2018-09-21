@@ -92,7 +92,7 @@ actions1_indices = tf.stack([row_indices_in, a1_in],axis=1)
 batch_size = tf.shape(s_in)[0]
 
 q_out = tf.matmul(tf.nn.relu(tf.matmul(s_in,w1)), w2)  
-q1_out = tf.matmul(tf.nn.relu(tf.matmul(s_in,w1)), w2) 
+q1_out = tf.matmul(tf.nn.relu(tf.matmul(s1_in,w1)), w2) 
 
 target = r_in + discount_in * not_done_in * tf.stop_gradient(tf.gather_nd(q1_out,actions1_indices))
 bellman_residual = target - tf.gather_nd(q_out,actions_indices) 
@@ -100,7 +100,7 @@ bellman_residual = target - tf.gather_nd(q_out,actions_indices)
 thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
+loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) #+ tf.reduce_sum(reg_losses)
 train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 

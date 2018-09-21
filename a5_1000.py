@@ -15,8 +15,8 @@ NUM_EPISODES_EVAL = 10
 NUM_TRIALS = 1
 
 #filenames
-SAVE_FOLDER = './save/'
-MODEL_FOLDER = './model/'
+MODEL_FOLDER = '../model/'
+SAVE_FOLDER = MODEL_FOLDER
 TENSORBOARD_FOLDER = '.'
 
 
@@ -105,12 +105,14 @@ bellman_residual = target - tf.gather_nd(q_out,actions_indices)
 thetas = [item for item in tf.trainable_variables()]
 reg_losses = [LAMBDA * tf.nn.l2_loss(item) for item in tf.trainable_variables() if 'weight' in item.name]
 
-loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) + tf.reduce_sum(reg_losses)
+loss = 0.5*tf.reduce_mean(tf.square(bellman_residual)) #+ tf.reduce_sum(reg_losses)
 train_op = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
 
 
 def run():
 	rew_BEST = -9999999999.999999999999
+
+	row_indices = np.arange(1)
 
 	losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
 	bellman_losses = np.zeros([NUM_TRIALS,NUM_EPISODES])
@@ -149,7 +151,7 @@ def run():
 									r_in:np.array([r_t1]),
 									s1_in:np.array([s_t1]),
 									discount_in:DISCOUNT,
-									row_indices_in:np.arange(1),
+									row_indices_in:row_indices,
 									not_done_in:np.array([not_done*1])
 									})
 					l1 += l2
